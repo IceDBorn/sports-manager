@@ -1,4 +1,4 @@
-package com.icedborn.sportsmanager.ui.matches;
+package com.icedborn.sportsmanager.ui.teams;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.icedborn.sportsmanager.R;
 
-public class MatchesFragment extends Fragment {
+public class TeamsFragment extends Fragment {
 
-    private MatchesViewModel matchesViewModel;
+    private TeamsViewModel teamsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        matchesViewModel =
-                new ViewModelProvider(this).get(MatchesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_matches, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        matchesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        teamsViewModel =
+                new ViewModelProvider(this).get(TeamsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_teams, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        teamsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

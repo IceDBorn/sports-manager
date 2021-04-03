@@ -1,16 +1,16 @@
-package com.icedborn.sportsmanager.ui.dashboard;
+package com.icedborn.sportsmanager.ui.sports;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class SportsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public SportsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is sports fragment");
     }
 
     public LiveData<String> getText() {
