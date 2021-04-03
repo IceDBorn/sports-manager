@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.icedborn.sportsmanager.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:name="com.icedborn.sportsmanager.ui.matches.MatchesFragment"
+        android:label="@string/title_matches"
         tools:layout="@layout/fragment_home" />
 
     <fragment
