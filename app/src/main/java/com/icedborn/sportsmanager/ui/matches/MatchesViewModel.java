@@ -1,16 +1,16 @@
-package com.icedborn.sportsmanager.ui.home;
+package com.icedborn.sportsmanager.ui.matches;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class MatchesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public MatchesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is matches fragment");
     }
 
     public LiveData<String> getText() {

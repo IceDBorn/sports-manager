@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_matches">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.icedborn.sportsmanager.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_matches"
+        android:name="com.icedborn.sportsmanager.ui.matches.MatchesFragment"
+        android:label="@string/title_matches"
+        tools:layout="@layout/fragment_matches" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.icedborn.sportsmanager.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_teams"
+        android:name="com.icedborn.sportsmanager.ui.teams.TeamsFragment"
+        android:label="@string/title_teams"
+        tools:layout="@layout/fragment_teams" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.icedborn.sportsmanager.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_athletes"
+        android:name="com.icedborn.sportsmanager.ui.athletes.AthletesFragment"
+        android:label="@string/title_athletes"
+        tools:layout="@layout/fragment_athletes" />
+
+    <fragment
+        android:id="@+id/navigation_sports"
+        android:name="com.icedborn.sportsmanager.ui.sports.SportsFragment"
+        android:label="@string/title_sports"
+        tools:layout="@layout/fragment_sports" />
 </navigation>
