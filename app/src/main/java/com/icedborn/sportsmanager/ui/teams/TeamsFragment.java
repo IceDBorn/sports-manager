@@ -16,20 +16,12 @@ import com.icedborn.sportsmanager.R;
 
 public class TeamsFragment extends Fragment {
 
-    private TeamsViewModel teamsViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        teamsViewModel =
-                new ViewModelProvider(this).get(TeamsViewModel.class);
+        TeamsViewModel teamsViewModel = new ViewModelProvider(this).get(TeamsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_teams, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        teamsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        final TextView textView = root.findViewById(R.id.text_teams);
+        teamsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 }

@@ -3,29 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_matches">
+    app:startDestination="@+id/nav_athletes">
 
     <fragment
-        android:id="@+id/navigation_matches"
-        android:name="com.icedborn.sportsmanager.ui.matches.MatchesFragment"
-        android:label="@string/title_matches"
-        tools:layout="@layout/fragment_matches" />
-
-    <fragment
-        android:id="@+id/navigation_teams"
-        android:name="com.icedborn.sportsmanager.ui.teams.TeamsFragment"
-        android:label="@string/title_teams"
-        tools:layout="@layout/fragment_teams" />
-
-    <fragment
-        android:id="@+id/navigation_athletes"
+        android:id="@+id/nav_athletes"
         android:name="com.icedborn.sportsmanager.ui.athletes.AthletesFragment"
-        android:label="@string/title_athletes"
+        android:label="@string/menu_home"
         tools:layout="@layout/fragment_athletes" />
 
     <fragment
-        android:id="@+id/navigation_sports"
+        android:id="@+id/nav_matches"
+        android:name="com.icedborn.sportsmanager.ui.matches.MatchesFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_matches" />
+
+    <fragment
+        android:id="@+id/nav_sports"
         android:name="com.icedborn.sportsmanager.ui.sports.SportsFragment"
-        android:label="@string/title_sports"
+        android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_sports" />
+
+    <fragment
+        android:id="@+id/nav_teams"
+        android:name="com.icedborn.sportsmanager.ui.teams.TeamsFragment"
+        android:label="@string/menu_teams"
+        tools:layout="@layout/fragment_teams" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.icedborn.sportsmanager.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

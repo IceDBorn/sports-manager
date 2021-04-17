@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 public class SportsViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public SportsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is sports fragment");
+        mText.setValue("Add sport");
     }
 
     public LiveData<String> getText() {

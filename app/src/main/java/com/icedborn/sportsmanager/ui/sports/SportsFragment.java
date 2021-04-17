@@ -16,20 +16,12 @@ import com.icedborn.sportsmanager.R;
 
 public class SportsFragment extends Fragment {
 
-    private SportsViewModel sportsViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sportsViewModel =
-                new ViewModelProvider(this).get(SportsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        sportsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        SportsViewModel sportsViewModel = new ViewModelProvider(this).get(SportsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_sports, container, false);
+        final TextView textView = root.findViewById(R.id.text_sports);
+        sportsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 }

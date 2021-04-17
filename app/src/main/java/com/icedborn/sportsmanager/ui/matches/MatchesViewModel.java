@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 public class MatchesViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public MatchesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is matches fragment");
+        mText.setValue("Add match");
     }
 
     public LiveData<String> getText() {

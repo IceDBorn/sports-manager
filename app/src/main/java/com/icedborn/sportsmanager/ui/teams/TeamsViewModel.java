@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class TeamsViewModel extends ViewModel {
-
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public TeamsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is teams fragment");
+        mText.setValue("Add team");
     }
 
     public LiveData<String> getText() {

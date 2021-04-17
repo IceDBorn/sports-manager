@@ -1,16 +1,15 @@
-package com.icedborn.sportsmanager.ui.athletes;
+package com.icedborn.sportsmanager.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AthletesViewModel extends ViewModel {
-
+public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
-    public AthletesViewModel() {
+    public SettingsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Add athlete");
+        mText.setValue("Settings");
     }
 
     public LiveData<String> getText() {
