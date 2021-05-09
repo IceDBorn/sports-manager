@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.ui.athletes.AthletesModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,21 +17,32 @@ import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
     // Δημιουργία νέου ArrayList
-    private final ArrayList<String> itemList;
+    private final ArrayList<AthletesModel> athletesList;
 
-    public recyclerAdapter(ArrayList<String> items) {
-        // Θέσε το itemlist με το ArrayList απο τις παραμέτρους
-        this.itemList = items;
+    public recyclerAdapter(ArrayList<AthletesModel> athletes) {
+        // Θέσε το athleteList με το ArrayList απο τις παραμέτρους
+        this.athletesList = athletes;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // Δημιουργία νέου textview
-        private final TextView athleteName;
+        private final TextView name;
+        private final TextView surname;
+        private final TextView city;
+        private final TextView code;
+        private final TextView country;
+        private final TextView date;
+        private final TextView sport;
 
         public MyViewHolder(final View view) {
             super(view);
-            // Θέσε το atheleteName με το athleteNameValue απο το textview στο list_athletes
-            athleteName = view.findViewById(R.id.athleteNameValue);
+            // Σύνδεσε τa textview με τα textview απο το list_athletes
+            name = view.findViewById(R.id.athleteName);
+            surname = view.findViewById(R.id.athleteSurname);
+            city = view.findViewById(R.id.athleteCity);
+            code = view.findViewById(R.id.athleteCode);
+            country = view.findViewById(R.id.athleteCountry);
+            date = view.findViewById(R.id.athleteDate);
+            sport = view.findViewById(R.id.athleteSportCode);
         }
     }
 
@@ -44,14 +56,18 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull recyclerAdapter.MyViewHolder holder, int position) {
-        // Θέσε athleteName με το string που βρίσκεται στην θέση position
-        String athleteName = itemList.get(position);
-        // Θέσε το athleteName του συγκεκριμένου item με το string απο παραπάνω
-        holder.athleteName.setText(athleteName);
+        // Θέσε τα field του holder με τις τιμές απο το athletesList
+        holder.name.setText(athletesList.get(position).name);
+        holder.surname.setText(athletesList.get(position).surname);
+        holder.city.setText(athletesList.get(position).city);
+        holder.code.setText(athletesList.get(position).code);
+        holder.country.setText(athletesList.get(position).country);
+        holder.date.setText(athletesList.get(position).date);
+        holder.sport.setText(athletesList.get(position).sport);
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return athletesList.size();
     }
 }

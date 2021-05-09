@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class AthletesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<String> athletesList;
+    private ArrayList<AthletesModel> athletesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
