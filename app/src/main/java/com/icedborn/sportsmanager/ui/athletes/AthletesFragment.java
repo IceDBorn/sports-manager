@@ -22,12 +22,12 @@ public class AthletesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         AthletesViewModel athletesViewModel = new ViewModelProvider(this).get(AthletesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         athletesList = athletesViewModel.getAthletes();
 
         // Αν η λίστα με τους αθλητές είναι άδεια, τότε εμφάνισε το textview
         if (athletesList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.text_athletes);
+            final TextView textView = root.findViewById(R.id.addText);
             athletesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 

@@ -24,11 +24,11 @@ public class TeamsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         TeamsViewModel teamsViewModel = new ViewModelProvider(this).get(TeamsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         teamsList = teamsViewModel.getTeams();
 
         if (teamsList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.text_teams);
+            final TextView textView = root.findViewById(R.id.addText);
             teamsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 

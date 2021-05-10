@@ -13,7 +13,7 @@ public class MatchesViewModel extends ViewModel {
 
     public MatchesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Add match");
+        mText.setValue("No matches");
 
         matchesList = new ArrayList<>();
 
@@ -22,7 +22,7 @@ public class MatchesViewModel extends ViewModel {
 
     // Πρόσθεσε στοιχεία στη λίστα των αγώνων
     private void SetMatchesInfo() {
-        matchesList.add(new MatchModel(1,4, 5, 6,"15/06/2021"));
+        /*matchesList.add(new MatchModel(1,4, 5, 6,"15/06/2021"));*/
     }
 
     public LiveData<String> getText() {

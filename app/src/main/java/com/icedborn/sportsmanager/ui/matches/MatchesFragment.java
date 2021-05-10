@@ -24,11 +24,11 @@ public class MatchesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MatchesViewModel matchesViewModel = new ViewModelProvider(this).get(MatchesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         matchesList = matchesViewModel.getMatches();
 
         if (matchesList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.text_matches);
+            final TextView textView = root.findViewById(R.id.addText);
             matchesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 

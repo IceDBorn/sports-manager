@@ -24,11 +24,11 @@ public class SportsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SportsViewModel sportsViewModel = new ViewModelProvider(this).get(SportsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         sportsList = sportsViewModel.getSports();
 
         if (sportsList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.text_sports);
+            final TextView textView = root.findViewById(R.id.addText);
             sportsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 
