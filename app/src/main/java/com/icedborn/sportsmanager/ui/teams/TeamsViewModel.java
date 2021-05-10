@@ -24,8 +24,8 @@ public class TeamsViewModel extends ViewModel {
         teamsList.add(new TeamModel(1, "Axileas", "Neoxori", "Arta", "Greece", 8, "02/12/1967"));
         teamsList.add(new TeamModel(2, "Anaggenisi", "Doxa", "Arta", "Greece", 7, "05/03/1982"));
         teamsList.add(new TeamModel(3, "Doxa", "Anaggenisi", "Arta", "Greece", 6, "07/06/1967"));
-        teamsList.add(new TeamModel(4, "Panathinaikos", "Oaka", "Athens", "Greece", 5, "02/12/1967"));
-        teamsList.add(new TeamModel(5, "Olimpiakos", "Karaiskaki", "Athens", "Greece", 4, "02/12/1967"));
+        teamsList.add(new TeamModel(4, "Panathinaikos", "Oaka", "Athens", "Greece", 6, "02/12/1967"));
+        teamsList.add(new TeamModel(5, "Olimpiakos", "Karaiskaki", "Athens", "Greece", 6, "02/12/1967"));
         teamsList.add(new TeamModel(6, "Paok", "Toumpa", "Thessaloniki", "Greece", 3, "02/12/1967"));
         teamsList.add(new TeamModel(7, "Aek", "Oaka", "Athens", "Greece", 2, "02/12/1967"));
         teamsList.add(new TeamModel(8, "Kommeno", "Kommeno", "Arta", "Greece", 1, "02/12/1967"));
