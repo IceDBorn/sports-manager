@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.ui.recyclerAdapter;
+
 import java.util.ArrayList;
 
 public class AthletesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<AthletesModel> athletesList;
+    private ArrayList<AthleteModel> athletesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class AthletesFragment extends Fragment {
 
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αθλητών
-        recyclerAdapter adapter = new recyclerAdapter(athletesList);
+        AthleteAdapter adapter = new AthleteAdapter(athletesList);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View
