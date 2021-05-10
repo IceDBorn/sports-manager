@@ -12,22 +12,22 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.ui.recyclerAdapter;
+
 import java.util.ArrayList;
 
 public class AthletesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<AthletesModel> athletesList;
+    private ArrayList<AthleteModel> athletesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         AthletesViewModel athletesViewModel = new ViewModelProvider(this).get(AthletesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_athletes, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         athletesList = athletesViewModel.getAthletes();
 
         // Αν η λίστα με τους αθλητές είναι άδεια, τότε εμφάνισε το textview
         if (athletesList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.text_athletes);
+            final TextView textView = root.findViewById(R.id.addText);
             athletesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 
@@ -42,7 +42,7 @@ public class AthletesFragment extends Fragment {
 
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αθλητών
-        recyclerAdapter adapter = new recyclerAdapter(athletesList);
+        AthleteAdapter adapter = new AthleteAdapter(athletesList);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View

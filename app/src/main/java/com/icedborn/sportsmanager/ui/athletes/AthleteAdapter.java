@@ -1,4 +1,4 @@
-package com.icedborn.sportsmanager.ui;
+package com.icedborn.sportsmanager.ui.athletes;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,17 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.ui.athletes.AthletesModel;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
+public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHolder> {
     // Δημιουργία νέου ArrayList
-    private final ArrayList<AthletesModel> athletesList;
+    private final ArrayList<AthleteModel> athletesList;
 
-    public recyclerAdapter(ArrayList<AthletesModel> athletes) {
+    public AthleteAdapter(ArrayList<AthleteModel> athletes) {
         // Θέσε το athleteList με το ArrayList απο τις παραμέτρους
         this.athletesList = athletes;
     }
@@ -49,21 +48,27 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @NonNull
     @NotNull
     @Override
-    public recyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public AthleteAdapter.MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_athletes, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull recyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull AthleteAdapter.MyViewHolder holder, int position) {
+        // Μετατροπή του int code σε String
+        String code = String.valueOf(athletesList.get(position).code);
+
+        // Μετατροπή του int sport σε String
+        String sport = String.valueOf(athletesList.get(position).sport);
+
         // Θέσε τα field του holder με τις τιμές απο το athletesList
         holder.name.setText(athletesList.get(position).name);
         holder.surname.setText(athletesList.get(position).surname);
         holder.city.setText(athletesList.get(position).city);
-        holder.code.setText(athletesList.get(position).code);
+        holder.code.setText(code);
         holder.country.setText(athletesList.get(position).country);
         holder.date.setText(athletesList.get(position).date);
-        holder.sport.setText(athletesList.get(position).sport);
+        holder.sport.setText(sport);
     }
 
     @Override
