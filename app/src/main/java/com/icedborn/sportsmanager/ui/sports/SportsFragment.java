@@ -14,17 +14,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.AthleteDAO;
+import com.icedborn.sportsmanager.databases.Connections;
+import com.icedborn.sportsmanager.databases.Sport;
+import com.icedborn.sportsmanager.databases.SportDAO;
 
 import java.util.ArrayList;
 
 public class SportsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<SportModel> sportsList;
+    private ArrayList<Sport> sportsList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SportsViewModel sportsViewModel = new ViewModelProvider(this).get(SportsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
+        sportsViewModel.SetSportsInfo(getContext());
+
+
+
+
         sportsList = sportsViewModel.getSports();
 
         if (sportsList.size() == 0) {

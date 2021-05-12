@@ -2,6 +2,7 @@ package com.icedborn.sportsmanager.databases;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 //The Athlete.class reason of creation is for creating a table in the database.
@@ -15,7 +16,8 @@ public class Athlete {
 
     //With the annotation @PrimaryKey we set the primary key of the table "Athlete" as the ID of the athlete
     //With the annotation @ColumnInfo we set the title of the column that is being made in the next line
-    @PrimaryKey
+
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "athlete_id")
     private long id;
 
@@ -36,8 +38,18 @@ public class Athlete {
 
 
     //We are making the two basic constructors in our class
+    @Ignore
     public Athlete(long id, String name, String surname, String city, String country, long sport_id, String year) {
         this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.city = city;
+        this.country = country;
+        this.sport_id = sport_id;
+        this.year = year;
+    }
+    public Athlete( String name, String surname, String city, String country, long sport_id, String year) {
+
         this.name = name;
         this.surname = surname;
         this.city = city;
