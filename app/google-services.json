@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948884365546",
+    "project_id": "sports-manager-f4b3f",
+    "storage_bucket": "sports-manager-f4b3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948884365546:android:33ed792bf5ac04622c3793",
+        "android_client_info": {
+          "package_name": "com.icedborn.sportsmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948884365546-vi4vhsfrvns2qq8srgm1nf4d6j42uq3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuCA6FCDsbSd2GHy-0qKiMN2oS8s8ICq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948884365546-vi4vhsfrvns2qq8srgm1nf4d6j42uq3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
