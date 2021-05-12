@@ -32,7 +32,7 @@ public class SportsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         sportsViewModel.SetSportsInfo(getContext());
 
-
+//
 
 
         sportsList = sportsViewModel.getSports();
