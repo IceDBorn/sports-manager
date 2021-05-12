@@ -15,10 +15,12 @@ public class DateController {
     }
 
     public static String makeDateString(int dayOfMonth, int month, int year) {
+        // Γύρισε την ημερομηνία στη παρακάτω μορφή
         return getMonthFormat(month) + " " + dayOfMonth + " " + year;
     }
 
     private static String getMonthFormat(int month) {
+        // Θέτει το μήνα σε κείμενο αντί για αριθμό
         switch (month) {
             case 1:
                 return "JAN";
