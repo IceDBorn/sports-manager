@@ -15,11 +15,11 @@ public class AthleteModel {
         5. Χώρα
         6. Κωδικός Αθλήματος
         7. Έτος γέννησης.*/
-
+  
     @PrimaryKey
     @ColumnInfo(name = "athlete_id")
     public int code;
-
+  
     public String name;
 
     public String surname;
@@ -34,8 +34,8 @@ public class AthleteModel {
     @ColumnInfo(name = "date_of_birth")
     public String date;
 
-    public AthleteModel(int code, String name, String surname, String city, String country, int sport, String date) {
-        this.code = code;
+    public AthleteModel(int id, String name, String surname, String city, String country, int sport, String date) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.city = city;
