@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
-import com.icedborn.sportsmanager.ui.athletes.AthleteModel;
 
 import java.util.ArrayList;
 
