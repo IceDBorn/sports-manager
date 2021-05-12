@@ -15,11 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
-import com.icedborn.sportsmanager.ui.sports.SportModel;
-import com.icedborn.sportsmanager.ui.sports.SportsViewModel;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddAthleteFragment extends Fragment {
@@ -35,7 +31,6 @@ public class AddAthleteFragment extends Fragment {
         InitDatePicker();
 
         date = root.findViewById(R.id.athleteBirthDate);
-
         date.setText(DateController.getToday());
 
         date.setOnClickListener(v -> datePickerDialog.show());
@@ -44,7 +39,7 @@ public class AddAthleteFragment extends Fragment {
 
         String[] sports = {"One", "Two", "Three"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, sports);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sports);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
