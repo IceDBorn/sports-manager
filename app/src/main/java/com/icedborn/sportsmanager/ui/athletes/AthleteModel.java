@@ -10,7 +10,7 @@ public class AthleteModel {
         6. Κωδικός Αθλήματος
         7. Έτος γέννησης.*/
 
-    public int code;
+    public int id;
     public String name;
     public String surname;
     public String city;
@@ -18,8 +18,8 @@ public class AthleteModel {
     public int sport;
     public String date;
 
-    public AthleteModel(int code, String name, String surname, String city, String country, int sport, String date) {
-        this.code = code;
+    public AthleteModel(int id, String name, String surname, String city, String country, int sport, String date) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.city = city;

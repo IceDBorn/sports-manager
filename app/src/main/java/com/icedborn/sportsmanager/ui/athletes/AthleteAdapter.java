@@ -56,7 +56,7 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull @NotNull AthleteAdapter.MyViewHolder holder, int position) {
         // Μετατροπή του int code σε String
-        String code = String.valueOf(athletesList.get(position).code);
+        String code = String.valueOf(athletesList.get(position).id);
 
         // Μετατροπή του int sport σε String
         String sport = String.valueOf(athletesList.get(position).sport);
