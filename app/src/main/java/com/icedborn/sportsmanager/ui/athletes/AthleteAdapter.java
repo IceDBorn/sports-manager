@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Athlete;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 
 public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHolder> {
     // Δημιουργία νέου ArrayList
-    private final ArrayList<AthleteModel> athletesList;
+    private final ArrayList<Athlete> athletesList;
 
-    public AthleteAdapter(ArrayList<AthleteModel> athletes) {
+    public AthleteAdapter(ArrayList<Athlete> athletes) {
         // Θέσε το athleteList με το ArrayList απο τις παραμέτρους
         this.athletesList = athletes;
     }
@@ -56,18 +57,18 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull @NotNull AthleteAdapter.MyViewHolder holder, int position) {
         // Μετατροπή του int code σε String
-        String code = String.valueOf(athletesList.get(position).id);
+        String code = String.valueOf(athletesList.get(position).getId());
 
         // Μετατροπή του int sport σε String
-        String sport = String.valueOf(athletesList.get(position).sport);
+        String sport = String.valueOf(athletesList.get(position).getSport_id());
 
         // Θέσε τα field του holder με τις τιμές απο το athletesList
-        holder.name.setText(athletesList.get(position).name);
-        holder.surname.setText(athletesList.get(position).surname);
-        holder.city.setText(athletesList.get(position).city);
+        holder.name.setText(athletesList.get(position).getName());
+        holder.surname.setText(athletesList.get(position).getSurname());
+        holder.city.setText(athletesList.get(position).getCity());
         holder.code.setText(code);
-        holder.country.setText(athletesList.get(position).country);
-        holder.date.setText(athletesList.get(position).date);
+        holder.country.setText(athletesList.get(position).getCountry());
+        holder.date.setText(athletesList.get(position).getYear());
         holder.sport.setText(sport);
     }
 

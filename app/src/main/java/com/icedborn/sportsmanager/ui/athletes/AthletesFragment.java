@@ -16,18 +16,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.AthleteDAO;
+import com.icedborn.sportsmanager.databases.Connections;
 
 import java.util.ArrayList;
 
 public class AthletesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<AthleteModel> athletesList;
+    private ArrayList<Athlete> athletesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         AthletesViewModel athletesViewModel = new ViewModelProvider(this).get(AthletesViewModel.class);
+        athletesViewModel.setContext(getContext());
+        Connections c= Connections.getInstance(getContext());
+        AthleteDAO athleteDAO=c.getDatabase().getAthleteDAO();
+        athleteDAO.insert(new Athlete("1231","takhs","mlks","cuiity",2,"3532"));
+        athletesList=(ArrayList)athleteDAO.getAllAthletes();
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
-        athletesList = athletesViewModel.getAthletes();
+        athletesViewModel.SetAthletesInfo(athletesList);
+//        athletesList = athletesViewModel.getAthletes();
 
         // Αν η λίστα με τους αθλητές είναι άδεια, τότε εμφάνισε το textview
         if (athletesList.size() == 0) {
@@ -52,7 +61,9 @@ public class AthletesFragment extends Fragment {
 
         return root;
     }
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
+    }
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αθλητών
         AthleteAdapter adapter = new AthleteAdapter(athletesList);
