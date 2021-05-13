@@ -18,13 +18,15 @@ import java.util.ArrayList;
 public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHolder> {
     // Δημιουργία νέου ArrayList
     private final ArrayList<Athlete> athletesList;
+    private final OnAthleteListener mOnAthleteListener;
 
-    public AthleteAdapter(ArrayList<Athlete> athletes) {
+    public AthleteAdapter(ArrayList<Athlete> athletes, OnAthleteListener onAthleteListener) {
         // Θέσε το athleteList με το ArrayList απο τις παραμέτρους
         this.athletesList = athletes;
+        this.mOnAthleteListener = onAthleteListener;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView name;
         private final TextView surname;
         private final TextView city;
@@ -32,9 +34,11 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
         private final TextView country;
         private final TextView date;
         private final TextView sport;
+        private final OnAthleteListener onAthleteListener;
 
-        public MyViewHolder(final View view) {
+        public MyViewHolder(final View view, OnAthleteListener onAthleteListener) {
             super(view);
+            this.onAthleteListener = onAthleteListener;
             // Σύνδεσε τa textview με τα textview απο το list_athletes
             name = view.findViewById(R.id.athleteName);
             surname = view.findViewById(R.id.athleteSurname);
@@ -43,7 +47,18 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
             country = view.findViewById(R.id.athleteCountry);
             date = view.findViewById(R.id.athleteDate);
             sport = view.findViewById(R.id.athleteSportCode);
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onAthleteListener.onAthleteClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnAthleteListener{
+        void onAthleteClick(int position);
     }
 
     @NonNull
@@ -51,7 +66,7 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
     @Override
     public AthleteAdapter.MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_athletes, parent, false);
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(itemView, mOnAthleteListener);
     }
 
     @Override
