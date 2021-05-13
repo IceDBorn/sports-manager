@@ -16,7 +16,7 @@ public class Sport {
 
     //With the annotation @PrimaryKey we set the primary key of the table "Sport" as the ID of the sport
     //With the annotation @ColumnInfo we set the title of the column that is being made in the next line
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "sport_id")
     private long id;
 
@@ -35,6 +35,7 @@ public class Sport {
         this.type = type;
         this.sex = sex;
     }
+
     @Ignore
     public Sport(long id, String name, String type, String sex) {
         this.id = id;
@@ -85,11 +86,6 @@ public class Sport {
     //A simple toString in case we need it somewhere
     @Override
     public String toString() {
-        return "Sport{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", sex='" + sex + '\'' +
-                '}';
+        return name;
     }
 }
