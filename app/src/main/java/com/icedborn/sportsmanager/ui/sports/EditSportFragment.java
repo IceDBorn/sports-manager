@@ -26,13 +26,13 @@ public class EditSportFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_sport, container, false);
+        View root = inflater.inflate(R.layout.edit_sport, container, false);
 
-        typeSpinner = root.findViewById(R.id.addSportTypes);
-        genderSpinner = root.findViewById(R.id.addSportGenders);
-        etName = root.findViewById(R.id.addSportName);
-
-        Button btnAdd = root.findViewById(R.id.addSportSave);
+        typeSpinner = root.findViewById(R.id.editSportTypes);
+        genderSpinner = root.findViewById(R.id.editSportGenders);
+        etName = root.findViewById(R.id.editSportName);
+        Button btnAdd = root.findViewById(R.id.editSportSave);
+        Button btnRemove = root.findViewById(R.id.editSportRemove);
 
         etName.setText(sport.getName());
 
@@ -44,6 +44,19 @@ public class EditSportFragment extends Fragment {
 
         // TODO: Άλλαξε την μέθοδο για να κάνει update αντί για insert
         btnAdd.setOnClickListener(v -> {
+            Sport sport = new Sport();
+            sport.setName(etName.getText().toString().trim());
+            sport.setType(typeSpinner.getSelectedItem().toString());
+            sport.setSex(genderSpinner.getSelectedItem().toString());
+
+
+            Connections c= Connections.getInstance(getContext());
+            SportDAO sportDAO = c.getDatabase().getSportDAO();
+            sportDAO.insert(sport);
+        });
+
+        // TODO: Άλλαξε την μέθοδο για να κάνει remove αντί για insert
+        btnRemove.setOnClickListener(v -> {
             Sport sport = new Sport();
             sport.setName(etName.getText().toString().trim());
             sport.setType(typeSpinner.getSelectedItem().toString());
