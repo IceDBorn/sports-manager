@@ -27,37 +27,39 @@ import com.icedborn.sportsmanager.databases.TeamDAO;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddTeamFragment extends Fragment {
+public class EditTeamFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TextView date;
     private EditText etName,etCountry,etCity,etStadium;
     private long sportId;
+    public Team team;
+    private Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_team, container, false);
+        View root = inflater.inflate(R.layout.edit_team, container, false);
 
-        etName = root.findViewById(R.id.addTeamName);
-        etCountry = root.findViewById(R.id.addTeamCountry);
-        etCity = root.findViewById(R.id.addTeamCity);
-        etStadium = root.findViewById(R.id.addTeamStadium);
+        etName = root.findViewById(R.id.editTeamName);
+        etCountry = root.findViewById(R.id.editTeamCountry);
+        etCity = root.findViewById(R.id.editTeamCity);
+        etStadium = root.findViewById(R.id.editTeamStadium);
+        date = root.findViewById(R.id.editTeamCreationDate);
+        Button btnAdd = root.findViewById(R.id.editTeamSave);
+        Button btnRemove = root.findViewById(R.id.editTeamRemove);
+        spinner = root.findViewById(R.id.editTeamSports);
 
-        Button btnAdd = root.findViewById(R.id.addTeamSave);
-
+        etName.setText(team.getName());
+        etCountry.setText(team.getCountry());
+        etCity.setText(team.getCity());
+        etStadium.setText(team.getCourt_name());
+        date.setText(team.getYear());
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
 
-        date = root.findViewById(R.id.addTeamCreationDate);
-
-        // Θέσε την ημερομηνία στη τωρινή
-        date.setText(DateController.getToday());
-
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
-
-        Spinner spinner = root.findViewById(R.id.addTeamSports);
 
         Connections c= Connections.getInstance(getContext());
         SportDAO sportDAO=c.getDatabase().getSportDAO();
@@ -82,6 +84,9 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
+        SetSpinnerSelectedItem(sportList);
+
+        // TODO: Άλλαξε την μέθοδο απο insert σε update
         btnAdd.setOnClickListener(v -> {
             Team team = new Team();
             team.setName(etName.getText().toString().trim());
@@ -96,7 +101,20 @@ public class AddTeamFragment extends Fragment {
             teamDAO.insert(team);
         });
 
+        // TODO: Άλλαξε την μέθοδο απο insert σε remove
+        btnRemove.setOnClickListener(v -> {
+            Team team = new Team();
+            team.setName(etName.getText().toString().trim());
+            team.setCountry(etCountry.getText().toString().trim());
+            team.setCity(etCity.getText().toString().trim());
+            team.setCourt_name(etStadium.getText().toString().trim());
+            team.setYear(date.getText().toString());
+            team.setSport_id(sportId);
 
+            Connections c1 = Connections.getInstance(getContext());
+            TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
+            teamDAO.insert(team);
+        });
 
         return root;
     }
@@ -118,5 +136,14 @@ public class AddTeamFragment extends Fragment {
 
         // Δημιουργία DatePickerDialog με τα στοιχεία απο παραπάνω
         datePickerDialog = new DatePickerDialog(this.getContext(), style, dateSetListener, year, month, day);
+    }
+
+    private void SetSpinnerSelectedItem(List<Sport> sportsList) {
+        for (int i = 0; i < sportsList.size(); i++) {
+            if (team.getSport_id() == sportsList.get(i).getId()) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 }

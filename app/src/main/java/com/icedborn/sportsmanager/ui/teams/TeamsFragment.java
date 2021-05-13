@@ -20,7 +20,7 @@ import com.icedborn.sportsmanager.databases.Team;
 
 import java.util.ArrayList;
 
-public class TeamsFragment extends Fragment {
+public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListener {
     private RecyclerView recyclerView;
     private ArrayList<Team> teamsList;
 
@@ -57,7 +57,7 @@ public class TeamsFragment extends Fragment {
 
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα ομάδων
-        TeamAdapter adapter = new TeamAdapter(teamsList);
+        TeamAdapter adapter = new TeamAdapter(teamsList, this);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View
@@ -66,5 +66,14 @@ public class TeamsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Θέσε τον Adapter toy Recycler View με το adapter
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onTeamClick(int position) {
+        EditTeamFragment editTeam = new EditTeamFragment();
+        editTeam.team = teamsList.get(position);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,editTeam);
+        transaction.commit();
     }
 }
