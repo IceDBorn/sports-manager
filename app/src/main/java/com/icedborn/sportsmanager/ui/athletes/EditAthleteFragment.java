@@ -38,15 +38,16 @@ public class EditAthleteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_athlete, container, false);
+        View root = inflater.inflate(R.layout.edit_athlete, container, false);
 
-        etCity = root.findViewById(R.id.addAthleteCity);
-        etCountry = root.findViewById(R.id.addAthleteCountry);
-        etName = root.findViewById(R.id.addAthleteName);
-        etSurname = root.findViewById(R.id.addAthleteSurname);
-        Button btnAdd = root.findViewById(R.id.addAthleteSave);
-        spinner = root.findViewById(R.id.addAthleteSports);
-        date = root.findViewById(R.id.athleteBirthDate);
+        etCity = root.findViewById(R.id.editAthleteCity);
+        etCountry = root.findViewById(R.id.editAthleteCountry);
+        etName = root.findViewById(R.id.editAthleteName);
+        etSurname = root.findViewById(R.id.editAthleteSurname);
+        Button btnAdd = root.findViewById(R.id.EditAthleteSave);
+        Button btnRemove = root.findViewById(R.id.EditAthleteRemove);
+        spinner = root.findViewById(R.id.EditAthleteSports);
+        date = root.findViewById(R.id.EditAthleteBirthDate);
 
         etName.setText(athlete.getName());
         etSurname.setText(athlete.getSurname());
@@ -59,12 +60,10 @@ public class EditAthleteFragment extends Fragment {
 
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
-        // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα
-        List<Sport> sportList;
 
         Connections c= Connections.getInstance(getContext());
         SportDAO sportDAO=c.getDatabase().getSportDAO();
-        sportList = sportDAO.getAllSports();
+        List<Sport> sportList = sportDAO.getAllSports();
 
         // Δημιουργία νέου ArrayAdapter για το spinner
         ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sportList);
@@ -97,6 +96,20 @@ public class EditAthleteFragment extends Fragment {
             athlete.setSport_id(sportId);
             athlete.setYear(date.getText().toString().trim());
 
+            Connections c1 = Connections.getInstance(getContext());
+            AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+            athleteDAO.insert(athlete);
+        });
+
+        // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
+        btnRemove.setOnClickListener(v -> {
+            Athlete athlete = new Athlete();
+            athlete.setName(etName.getText().toString().trim());
+            athlete.setSurname(etSurname.getText().toString().trim());
+            athlete.setCountry(etCountry.getText().toString().trim());
+            athlete.setCity(etCity.getText().toString().trim());
+            athlete.setSport_id(sportId);
+            athlete.setYear(date.getText().toString().trim());
 
             Connections c1 = Connections.getInstance(getContext());
             AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
