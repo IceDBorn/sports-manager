@@ -13,16 +13,14 @@ import androidx.fragment.app.Fragment;
 import com.icedborn.sportsmanager.R;
 
 public class AddSportFragment extends Fragment {
-    Spinner typeSpinner;
-    Spinner genderSpinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.add_sport, container, false);
 
-        typeSpinner = root.findViewById(R.id.addSportTypes);
-        genderSpinner = root.findViewById(R.id.addSportGenders);
+        Spinner typeSpinner = root.findViewById(R.id.addSportTypes);
+        Spinner genderSpinner = root.findViewById(R.id.addSportGenders);
 
         // Οι τύποι των αθλημάτων
         String[] types = {"Individual", "Team"};

@@ -1,4 +1,4 @@
-package com.icedborn.sportsmanager.ui.athletes;
+package com.icedborn.sportsmanager.ui.teams;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -18,26 +18,27 @@ import com.icedborn.sportsmanager.controllers.DateController;
 
 import java.util.Calendar;
 
-public class AddAthleteFragment extends Fragment {
+public class AddTeamFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TextView date;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_athlete, container, false);
+        View root = inflater.inflate(R.layout.add_team, container, false);
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
 
-        date = root.findViewById(R.id.athleteBirthDate);
+        date = root.findViewById(R.id.addTeamCreationDate);
+
         // Θέσε την ημερομηνία στη τωρινή
         date.setText(DateController.getToday());
 
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        Spinner spinner = root.findViewById(R.id.addAthleteSports);
+        Spinner spinner = root.findViewById(R.id.addTeamSports);
 
         // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα
         String[] sports = {"One", "Two", "Three"};
@@ -47,7 +48,6 @@ public class AddAthleteFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
-
 
         return root;
     }
