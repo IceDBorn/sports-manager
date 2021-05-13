@@ -1,7 +1,7 @@
 package com.icedborn.sportsmanager.ui.matches;
 
 public class MatchModel {
-    /*Αγώναας με ενδεικτικά πεδία
+    /*Αγώνας με ενδεικτικά πεδία
         1. Κωδικός αγώνα
         2. Ομάδα πρώτη
         3. Ομάδα δεύτερη
