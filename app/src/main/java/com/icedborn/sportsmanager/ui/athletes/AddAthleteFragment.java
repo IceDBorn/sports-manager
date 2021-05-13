@@ -22,7 +22,9 @@ import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddAthleteFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
@@ -59,10 +61,10 @@ public class AddAthleteFragment extends Fragment {
         spinner = root.findViewById(R.id.addAthleteSports);
 
         // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα
-        String[] sports = {"One", "Two", "Three"};
+        List<Sport> sports = new ArrayList<>();
 
         // Δημιουργία νέου ArrayAdapter για το spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sports);
+        ArrayAdapter<Sport> adapter = new ArrayAdapter<Sport>(this.getContext(), android.R.layout.simple_spinner_item, sports);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -80,9 +82,6 @@ public class AddAthleteFragment extends Fragment {
                 athlete.setYear(date.getText().toString().trim());
 
 
-
-
-
                 Connections c= Connections.getInstance(getContext());
                 AthleteDAO athleteDAO=c.getDatabase().getAthleteDAO();
                 athleteDAO.insert(athlete);
@@ -90,6 +89,16 @@ public class AddAthleteFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public void getSelectedAthlete(View v) {
+        Athlete athlete = (Athlete) spinner.getSelectedItem();
+
+    }
+
+    private void displayAthleteData(Athlete athlete){
+        String name = athlete.getName();
+
     }
 
     private void InitializeDatePicker() {
