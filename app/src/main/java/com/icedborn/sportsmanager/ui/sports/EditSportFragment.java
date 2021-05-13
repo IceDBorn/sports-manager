@@ -17,10 +17,11 @@ import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
 
-public class AddSportFragment extends Fragment {
+public class EditSportFragment extends Fragment {
 
     private EditText etName;
     private Spinner typeSpinner,genderSpinner;
+    public Sport sport;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,9 +30,11 @@ public class AddSportFragment extends Fragment {
 
         typeSpinner = root.findViewById(R.id.addSportTypes);
         genderSpinner = root.findViewById(R.id.addSportGenders);
-
         etName = root.findViewById(R.id.addSportName);
+
         Button btnAdd = root.findViewById(R.id.addSportSave);
+
+        etName.setText(sport.getName());
 
         // Οι τύποι των αθλημάτων
         String[] types = {"Individual", "Team"};
@@ -39,6 +42,7 @@ public class AddSportFragment extends Fragment {
         // Τα γένη των αθλητών για το κάθε άθλημα
         String[] genders = {"Male", "Female", "Both"};
 
+        // TODO: Άλλαξε την μέθοδο για να κάνει update αντί για insert
         btnAdd.setOnClickListener(v -> {
             Sport sport = new Sport();
             sport.setName(etName.getText().toString().trim());
@@ -61,6 +65,31 @@ public class AddSportFragment extends Fragment {
         typeSpinner.setAdapter(typeAdapter);
         genderSpinner.setAdapter(genderAdapter);
 
+        SetTypeSpinnerSelectedItem();
+        SetGenderSpinnerSelectedItem();
+
         return root;
+    }
+
+    private void SetTypeSpinnerSelectedItem() {
+        if ("Individual".equals(sport.getType())) {
+            typeSpinner.setSelection(0);
+        } else {
+            typeSpinner.setSelection(1);
+        }
+    }
+
+    private void SetGenderSpinnerSelectedItem() {
+        switch (sport.getSex()) {
+            case "Male":
+                genderSpinner.setSelection(0);
+                break;
+            case "Female":
+                genderSpinner.setSelection(1);
+                break;
+            default:
+                genderSpinner.setSelection(2);
+                break;
+        }
     }
 }
