@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/addAthleteName"
+        android:id="@+id/addTeamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -20,10 +20,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteImage" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamImage" />
 
     <EditText
-        android:id="@+id/addAthleteSurname"
+        android:id="@+id/addTeamStadium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -32,15 +32,15 @@
         android:layout_marginEnd="125dp"
         android:layout_marginRight="125dp"
         android:ems="10"
+        android:hint="Stadium"
         android:inputType="textPersonName"
-        android:hint="Surname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteName" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamName" />
 
     <EditText
-        android:id="@+id/addAthleteCity"
+        android:id="@+id/addTeamCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -54,10 +54,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteSurname" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamStadium" />
 
     <EditText
-        android:id="@+id/addAthleteCountry"
+        android:id="@+id/addTeamCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -71,10 +71,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteCity" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamCity" />
 
     <ImageView
-        android:id="@+id/addAthleteImage"
+        android:id="@+id/addTeamImage"
         android:layout_width="132dp"
         android:layout_height="123dp"
         android:layout_marginStart="125dp"
@@ -85,11 +85,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu_athletes"
+        app:srcCompat="@drawable/ic_menu_teams"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/athleteBirthDate"
+        android:id="@+id/addTeamCreationDate"
         style="?android:spinnerStyle"
         android:layout_width="190dp"
         android:layout_height="45dp"
@@ -101,10 +101,10 @@
         android:hint="Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteCountry" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamCountry" />
 
     <Spinner
-        android:id="@+id/addAthleteSports"
+        android:id="@+id/addTeamSports"
         android:layout_width="197dp"
         android:layout_height="45dp"
         android:layout_marginStart="135dp"
@@ -114,10 +114,10 @@
         android:layout_marginRight="125dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/athleteBirthDate" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamCreationDate" />
 
     <Button
-        android:id="@+id/addAthleteSave"
+        android:id="@+id/addTeamSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -125,9 +125,9 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="125dp"
         android:layout_marginRight="125dp"
-        android:text="Add athlete"
+        android:text="Add team"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAthleteSports" />
+        app:layout_constraintTop_toBottomOf="@+id/addTeamSports" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
