@@ -17,28 +17,43 @@ import java.util.ArrayList;
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder>{
     // Δημιουργία νέου ArrayList
     private final ArrayList<MatchModel> matchesList;
+    private final OnMatchListener mOnMatchListener;
 
-    public MatchAdapter(ArrayList<MatchModel> matches) {
+    public MatchAdapter(ArrayList<MatchModel> matches, OnMatchListener onMatchListener) {
         // Θέσε το matchesList με το ArrayList απο τις παραμέτρους
         this.matchesList = matches;
+        this.mOnMatchListener = onMatchListener;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView code;
         private final TextView host;
         private final TextView guest;
         private final TextView sport;
         private final TextView date;
+        private final OnMatchListener onMatchListener;
 
-        public MyViewHolder(final View view) {
+        public MyViewHolder(final View view, OnMatchListener onMatchListener) {
             super(view);
+            this.onMatchListener = onMatchListener;
             // Σύνδεσε τa textview με τα textview απο το list_sports
             code = view.findViewById(R.id.matchCode);
             host = view.findViewById(R.id.matchHost);
             guest = view.findViewById(R.id.matchGuest);
             sport = view.findViewById(R.id.matchSportCode);
             date = view.findViewById(R.id.matchDate);
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onMatchListener.onMatchClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnMatchListener{
+        void onMatchClick(int position);
     }
 
     @NonNull
@@ -46,7 +61,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
     @Override
     public MatchAdapter.MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_matches, parent, false);
-        return new MatchAdapter.MyViewHolder(itemView);
+        return new MatchAdapter.MyViewHolder(itemView, mOnMatchListener);
     }
 
     @Override
