@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
@@ -99,6 +100,11 @@ public class EditAthleteFragment extends Fragment {
             Connections c1 = Connections.getInstance(getContext());
             AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
             athleteDAO.insert(athlete);
+
+            AthletesFragment Athletes = new AthletesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.commit();
         });
 
         // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
@@ -114,6 +120,11 @@ public class EditAthleteFragment extends Fragment {
             Connections c1 = Connections.getInstance(getContext());
             AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
             athleteDAO.insert(athlete);
+
+            AthletesFragment Athletes = new AthletesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.commit();
         });
 
         return root;

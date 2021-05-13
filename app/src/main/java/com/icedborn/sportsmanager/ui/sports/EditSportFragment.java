@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.databases.Connections;
@@ -53,6 +54,11 @@ public class EditSportFragment extends Fragment {
             Connections c= Connections.getInstance(getContext());
             SportDAO sportDAO = c.getDatabase().getSportDAO();
             sportDAO.insert(sport);
+
+            SportsFragment Sports = new SportsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Sports);
+            transaction.commit();
         });
 
         // TODO: Άλλαξε την μέθοδο για να κάνει remove αντί για insert
@@ -66,6 +72,11 @@ public class EditSportFragment extends Fragment {
             Connections c= Connections.getInstance(getContext());
             SportDAO sportDAO = c.getDatabase().getSportDAO();
             sportDAO.insert(sport);
+
+            SportsFragment Sports = new SportsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Sports);
+            transaction.commit();
         });
 
         // Δημιουργία νέων ArrayAdapter για τα spinner

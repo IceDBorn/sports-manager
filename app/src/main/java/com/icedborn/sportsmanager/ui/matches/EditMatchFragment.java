@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
@@ -37,6 +38,20 @@ public class EditMatchFragment extends Fragment {
         Button btnAdd = root.findViewById(R.id.editMatchSave);
         Button btnRemove = root.findViewById(R.id.editMatchRemove);
         date = root.findViewById(R.id.editMatchDate);
+
+        btnAdd.setOnClickListener(v -> {
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+        });
+
+        btnRemove.setOnClickListener(v -> {
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+        });
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
