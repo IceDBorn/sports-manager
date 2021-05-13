@@ -59,7 +59,6 @@ public class AddTeamFragment extends Fragment {
 
         Spinner spinner = root.findViewById(R.id.addTeamSports);
 
-        // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα
         Connections c= Connections.getInstance(getContext());
         SportDAO sportDAO=c.getDatabase().getSportDAO();
         List<Sport> sportList = sportDAO.getAllSports();

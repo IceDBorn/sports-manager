@@ -38,15 +38,16 @@ public class EditTeamFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_team, container, false);
+        View root = inflater.inflate(R.layout.edit_team, container, false);
 
-        etName = root.findViewById(R.id.addTeamName);
-        etCountry = root.findViewById(R.id.addTeamCountry);
-        etCity = root.findViewById(R.id.addTeamCity);
-        etStadium = root.findViewById(R.id.addTeamStadium);
-        date = root.findViewById(R.id.addTeamCreationDate);
-        Button btnAdd = root.findViewById(R.id.addTeamSave);
-        spinner = root.findViewById(R.id.addTeamSports);
+        etName = root.findViewById(R.id.editTeamName);
+        etCountry = root.findViewById(R.id.editTeamCountry);
+        etCity = root.findViewById(R.id.editTeamCity);
+        etStadium = root.findViewById(R.id.editTeamStadium);
+        date = root.findViewById(R.id.editTeamCreationDate);
+        Button btnAdd = root.findViewById(R.id.editTeamSave);
+        Button btnRemove = root.findViewById(R.id.editTeamRemove);
+        spinner = root.findViewById(R.id.editTeamSports);
 
         etName.setText(team.getName());
         etCountry.setText(team.getCountry());
@@ -60,7 +61,6 @@ public class EditTeamFragment extends Fragment {
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα
         Connections c= Connections.getInstance(getContext());
         SportDAO sportDAO=c.getDatabase().getSportDAO();
         List<Sport> sportList = sportDAO.getAllSports();
@@ -101,7 +101,20 @@ public class EditTeamFragment extends Fragment {
             teamDAO.insert(team);
         });
 
+        // TODO: Άλλαξε την μέθοδο απο insert σε remove
+        btnRemove.setOnClickListener(v -> {
+            Team team = new Team();
+            team.setName(etName.getText().toString().trim());
+            team.setCountry(etCountry.getText().toString().trim());
+            team.setCity(etCity.getText().toString().trim());
+            team.setCourt_name(etStadium.getText().toString().trim());
+            team.setYear(date.getText().toString());
+            team.setSport_id(sportId);
 
+            Connections c1 = Connections.getInstance(getContext());
+            TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
+            teamDAO.insert(team);
+        });
 
         return root;
     }
