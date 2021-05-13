@@ -20,9 +20,11 @@ import com.icedborn.sportsmanager.databases.Athlete;
 import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
-public class AthletesFragment extends Fragment {
+public class AthletesFragment extends Fragment implements AthleteAdapter.OnAthleteListener {
     private RecyclerView recyclerView;
     private ArrayList<Athlete> athletesList;
 
@@ -30,15 +32,11 @@ public class AthletesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         AthletesViewModel athletesViewModel = new ViewModelProvider(this).get(AthletesViewModel.class);
 
-        athletesViewModel.setContext(getContext());
         Connections c= Connections.getInstance(getContext());
         AthleteDAO athleteDAO=c.getDatabase().getAthleteDAO();
 
-        //athleteDAO.insert(new Athlete("1231","takhs","mlks","cuiity",2,"3532"));
-        athletesList=(ArrayList)athleteDAO.getAllAthletes();
+        athletesList=(ArrayList<Athlete>)athleteDAO.getAllAthletes();
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
-        athletesViewModel.SetAthletesInfo(athletesList);
-//        athletesList = athletesViewModel.getAthletes();
 
         // Αν η λίστα με τους αθλητές είναι άδεια, τότε εμφάνισε το textview
         if (athletesList.size() == 0) {
@@ -63,12 +61,12 @@ public class AthletesFragment extends Fragment {
 
         return root;
     }
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
 
     }
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αθλητών
-        AthleteAdapter adapter = new AthleteAdapter(athletesList);
+        AthleteAdapter adapter = new AthleteAdapter(athletesList, this);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View
@@ -77,5 +75,14 @@ public class AthletesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Θέσε τον Adapter toy Recycler View με το adapter
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onAthleteClick(int position) {
+        EditAthleteFragment editAthlete = new EditAthleteFragment();
+        editAthlete.athlete = athletesList.get(position);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,editAthlete);
+        transaction.commit();
     }
 }

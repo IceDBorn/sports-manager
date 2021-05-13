@@ -27,39 +27,39 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddAthleteFragment extends Fragment {
+public class EditAthleteFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
-    TextView date;
-    Spinner spinner;
-    EditText etName,etSurname,etCity,etCountry;
-    Button btnAdd;
+    private TextView date;
+    private EditText etName,etSurname,etCity,etCountry;
+    private Spinner spinner;
     private long sportId;
-
-
+    public Athlete athlete;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.add_athlete, container, false);
+        View root = inflater.inflate(R.layout.edit_athlete, container, false);
 
-        etCity = root.findViewById(R.id.addAthleteCity);
-        etCountry = root.findViewById(R.id.addAthleteCountry);
-        etName = root.findViewById(R.id.addAthleteName);
-        etSurname = root.findViewById(R.id.addAthleteSurname);
-        btnAdd = root.findViewById(R.id.addAthleteSave);
+        etCity = root.findViewById(R.id.editAthleteCity);
+        etCountry = root.findViewById(R.id.editAthleteCountry);
+        etName = root.findViewById(R.id.editAthleteName);
+        etSurname = root.findViewById(R.id.editAthleteSurname);
+        Button btnAdd = root.findViewById(R.id.EditAthleteSave);
+        Button btnRemove = root.findViewById(R.id.EditAthleteRemove);
+        spinner = root.findViewById(R.id.EditAthleteSports);
+        date = root.findViewById(R.id.EditAthleteBirthDate);
 
+        etName.setText(athlete.getName());
+        etSurname.setText(athlete.getSurname());
+        etCity.setText(athlete.getCity());
+        etCountry.setText(athlete.getCountry());
+        date.setText(athlete.getYear());
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
 
-        date = root.findViewById(R.id.athleteBirthDate);
-        // Θέσε την ημερομηνία στη τωρινή
-        date.setText(DateController.getToday());
-
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
-
-        spinner = root.findViewById(R.id.addAthleteSports);
 
         Connections c= Connections.getInstance(getContext());
         SportDAO sportDAO=c.getDatabase().getSportDAO();
@@ -84,6 +84,9 @@ public class AddAthleteFragment extends Fragment {
             }
         });
 
+        SetSpinnerSelectedItem(sportList);
+
+        // TODO: Άλλαξε αυτή τη μέθοδο για να κάνει update τον αθλητή αντί να προσθέτει καινούριο
         btnAdd.setOnClickListener(v -> {
             Athlete athlete = new Athlete();
             athlete.setName(etName.getText().toString().trim());
@@ -93,6 +96,20 @@ public class AddAthleteFragment extends Fragment {
             athlete.setSport_id(sportId);
             athlete.setYear(date.getText().toString().trim());
 
+            Connections c1 = Connections.getInstance(getContext());
+            AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+            athleteDAO.insert(athlete);
+        });
+
+        // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
+        btnRemove.setOnClickListener(v -> {
+            Athlete athlete = new Athlete();
+            athlete.setName(etName.getText().toString().trim());
+            athlete.setSurname(etSurname.getText().toString().trim());
+            athlete.setCountry(etCountry.getText().toString().trim());
+            athlete.setCity(etCity.getText().toString().trim());
+            athlete.setSport_id(sportId);
+            athlete.setYear(date.getText().toString().trim());
 
             Connections c1 = Connections.getInstance(getContext());
             AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
@@ -120,5 +137,14 @@ public class AddAthleteFragment extends Fragment {
 
         // Δημιουργία DatePickerDialog με τα στοιχεία απο παραπάνω
         datePickerDialog = new DatePickerDialog(this.getContext(), style, dateSetListener, year, month, day);
+    }
+
+    private void SetSpinnerSelectedItem(List<Sport> sportsList) {
+        for (int i = 0; i < sportsList.size(); i++) {
+            if (athlete.getSport_id() == sportsList.get(i).getId()) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 }
