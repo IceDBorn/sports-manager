@@ -16,18 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.ui.athletes.AddAthleteFragment;
+import com.icedborn.sportsmanager.databases.Team;
 
 import java.util.ArrayList;
 
 public class TeamsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<TeamModel> teamsList;
+    private ArrayList<Team> teamsList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         TeamsViewModel teamsViewModel = new ViewModelProvider(this).get(TeamsViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
+        teamsViewModel.SetTeamsInfo(getContext());
         teamsList = teamsViewModel.getTeams();
 
         if (teamsList.size() == 0) {

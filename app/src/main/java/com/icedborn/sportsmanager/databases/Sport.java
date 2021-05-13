@@ -29,12 +29,14 @@ public class Sport {
 
 
     //We are making the two basic constructors in our class
+
     public Sport( String name, String type, String sex) {
 
         this.name = name;
         this.type = type;
         this.sex = sex;
     }
+
     @Ignore
     public Sport(long id, String name, String type, String sex) {
         this.id = id;
@@ -85,11 +87,6 @@ public class Sport {
     //A simple toString in case we need it somewhere
     @Override
     public String toString() {
-        return "Sport{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", sex='" + sex + '\'' +
-                '}';
+        return name;
     }
 }

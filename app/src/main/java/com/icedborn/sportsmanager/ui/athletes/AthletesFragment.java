@@ -29,10 +29,12 @@ public class AthletesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         AthletesViewModel athletesViewModel = new ViewModelProvider(this).get(AthletesViewModel.class);
+
         athletesViewModel.setContext(getContext());
         Connections c= Connections.getInstance(getContext());
         AthleteDAO athleteDAO=c.getDatabase().getAthleteDAO();
-        athleteDAO.insert(new Athlete("1231","takhs","mlks","cuiity",2,"3532"));
+
+        //athleteDAO.insert(new Athlete("1231","takhs","mlks","cuiity",2,"3532"));
         athletesList=(ArrayList)athleteDAO.getAllAthletes();
         View root = inflater.inflate(R.layout.fragment_recycleview, container, false);
         athletesViewModel.SetAthletesInfo(athletesList);
