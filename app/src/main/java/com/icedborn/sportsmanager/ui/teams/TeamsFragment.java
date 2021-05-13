@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.databases.Team;
 
@@ -34,6 +36,15 @@ public class TeamsFragment extends Fragment {
             final TextView textView = root.findViewById(R.id.addText);
             teamsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
+
+        FloatingActionButton add = root.findViewById(R.id.addButton);
+
+        add.setOnClickListener(v -> {
+            AddTeamFragment addTeam = new AddTeamFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,addTeam);
+            transaction.commit();
+        });
 
         // Δημιουργία νέου Recycler View
         recyclerView = root.findViewById(R.id.itemsView);

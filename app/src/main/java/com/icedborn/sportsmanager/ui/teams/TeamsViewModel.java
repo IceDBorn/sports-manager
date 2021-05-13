@@ -33,7 +33,6 @@ public class TeamsViewModel extends ViewModel {
     public void SetTeamsInfo(Context context) {
         Connections connections = Connections.getInstance(context);
         TeamDAO teamDAO = connections.getDatabase().getTeamDAO();
-        teamDAO.insert(new Team("fag","gag","gahs","gahsd",124,"1832"));
         teamsList = (ArrayList)teamDAO.getAllTeams();
     }
 
