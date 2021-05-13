@@ -48,7 +48,7 @@ public class AddAthleteFragment extends Fragment {
         etCity = root.findViewById(R.id.addAthleteCity);
         etCountry = root.findViewById(R.id.addAthleteCountry);
         etName = root.findViewById(R.id.addAthleteName);
-        etSurname = root.findViewById(R.id.addAthletesSurname);
+        etSurname = root.findViewById(R.id.addAthleteSurname);
         btnAdd = root.findViewById(R.id.addAthleteSave);
 
 

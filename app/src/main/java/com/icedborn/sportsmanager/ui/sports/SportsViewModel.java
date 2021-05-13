@@ -30,8 +30,7 @@ public class SportsViewModel extends ViewModel {
 
         Connections c= Connections.getInstance(context);
         SportDAO sportDAO=c.getDatabase().getSportDAO();
-        sportDAO.insert(new Sport("name","aoishf","qof"));
-        sportDAO.insert(new Sport("George","Karellias","Male"));
+
 
         sportsList=(ArrayList)sportDAO.getAllSports();
 
