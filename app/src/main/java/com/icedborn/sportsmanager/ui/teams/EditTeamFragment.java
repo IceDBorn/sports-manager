@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
@@ -99,6 +100,11 @@ public class EditTeamFragment extends Fragment {
             Connections c1 = Connections.getInstance(getContext());
             TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
             teamDAO.insert(team);
+
+            TeamsFragment Teams = new TeamsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Teams);
+            transaction.commit();
         });
 
         // TODO: Άλλαξε την μέθοδο απο insert σε remove
@@ -114,6 +120,11 @@ public class EditTeamFragment extends Fragment {
             Connections c1 = Connections.getInstance(getContext());
             TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
             teamDAO.insert(team);
+
+            TeamsFragment Teams = new TeamsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Teams);
+            transaction.commit();
         });
 
         return root;

@@ -7,14 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
+import com.icedborn.sportsmanager.ui.teams.TeamsFragment;
 
 import java.util.Calendar;
 
@@ -26,6 +29,15 @@ public class AddMatchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.add_match, container, false);
+
+        Button btnAdd = root.findViewById(R.id.addMatchSave);
+
+        btnAdd.setOnClickListener(v -> {
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+        });
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();

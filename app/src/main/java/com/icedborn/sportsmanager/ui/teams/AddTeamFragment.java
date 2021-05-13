@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
@@ -23,6 +24,7 @@ import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
 import com.icedborn.sportsmanager.databases.Team;
 import com.icedborn.sportsmanager.databases.TeamDAO;
+import com.icedborn.sportsmanager.ui.sports.SportsFragment;
 
 import java.util.Calendar;
 import java.util.List;
@@ -94,6 +96,11 @@ public class AddTeamFragment extends Fragment {
             Connections c1 = Connections.getInstance(getContext());
             TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
             teamDAO.insert(team);
+
+            TeamsFragment Teams = new TeamsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,Teams);
+            transaction.commit();
         });
 
 
