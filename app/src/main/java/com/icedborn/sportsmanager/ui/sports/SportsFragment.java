@@ -8,17 +8,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.databases.Athlete;
-import com.icedborn.sportsmanager.databases.AthleteDAO;
-import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
-import com.icedborn.sportsmanager.databases.SportDAO;
 
 import java.util.ArrayList;
 
@@ -41,6 +39,15 @@ public class SportsFragment extends Fragment {
             final TextView textView = root.findViewById(R.id.addText);
             sportsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
+
+        FloatingActionButton add = root.findViewById(R.id.addButton);
+
+        add.setOnClickListener(v -> {
+            AddSportFragment addSport = new AddSportFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment,addSport);
+            transaction.commit();
+        });
 
         // Δημιουργία νέου Recycler View
         recyclerView = root.findViewById(R.id.itemsView);
