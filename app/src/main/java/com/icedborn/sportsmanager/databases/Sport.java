@@ -16,7 +16,7 @@ public class Sport {
 
     //With the annotation @PrimaryKey we set the primary key of the table "Sport" as the ID of the sport
     //With the annotation @ColumnInfo we set the title of the column that is being made in the next line
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "sport_id")
     private long id;
 
@@ -29,6 +29,7 @@ public class Sport {
 
 
     //We are making the two basic constructors in our class
+
     public Sport( String name, String type, String sex) {
 
         this.name = name;
