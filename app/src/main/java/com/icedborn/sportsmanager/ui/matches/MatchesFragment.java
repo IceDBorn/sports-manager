@@ -19,7 +19,7 @@ import com.icedborn.sportsmanager.R;
 
 import java.util.ArrayList;
 
-public class MatchesFragment extends Fragment {
+public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchListener {
     private RecyclerView recyclerView;
     private ArrayList<MatchModel> matchesList;
 
@@ -54,7 +54,7 @@ public class MatchesFragment extends Fragment {
 
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αγώνων
-        MatchAdapter adapter = new MatchAdapter(matchesList);
+        MatchAdapter adapter = new MatchAdapter(matchesList, this);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View
@@ -63,5 +63,14 @@ public class MatchesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Θέσε τον Adapter toy Recycler View με το adapter
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onMatchClick(int position) {
+        EditMatchFragment editMatch = new EditMatchFragment();
+        editMatch.match = matchesList.get(position);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,editMatch);
+        transaction.commit();
     }
 }
