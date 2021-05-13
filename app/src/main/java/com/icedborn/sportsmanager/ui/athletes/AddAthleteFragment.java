@@ -20,6 +20,7 @@ import com.icedborn.sportsmanager.controllers.DateController;
 import com.icedborn.sportsmanager.databases.Athlete;
 import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
+import com.icedborn.sportsmanager.databases.Sport;
 
 import java.util.Calendar;
 
@@ -31,6 +32,8 @@ public class AddAthleteFragment extends Fragment {
     EditText etName,etSurname,etCity,etCountry;
     Button btnAdd;
 
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +44,7 @@ public class AddAthleteFragment extends Fragment {
         etName = root.findViewById(R.id.addAthleteName);
         etSurname = root.findViewById(R.id.addAthletesSurname);
         btnAdd = root.findViewById(R.id.addAthleteSave);
+
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
@@ -74,6 +78,10 @@ public class AddAthleteFragment extends Fragment {
                 athlete.setCity(etCity.getText().toString().trim());
                 athlete.setSport_id(3);
                 athlete.setYear(date.getText().toString().trim());
+
+
+
+
 
                 Connections c= Connections.getInstance(getContext());
                 AthleteDAO athleteDAO=c.getDatabase().getAthleteDAO();

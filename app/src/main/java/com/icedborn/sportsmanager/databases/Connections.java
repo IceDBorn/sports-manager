@@ -4,10 +4,14 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import java.util.List;
+
 //We are using the singleton technique that makes only one instance of the database.
 //If an instance exists then it cannot make another instance of the database.
 //For that we builded the Connections Class that can check the connections to the database.
 public class Connections {
+
+    private SportDAO sportDAO;
 
     private static Connections instance;
     private AppDatabase database;   //The connection to our database (AppDatabase.class).
