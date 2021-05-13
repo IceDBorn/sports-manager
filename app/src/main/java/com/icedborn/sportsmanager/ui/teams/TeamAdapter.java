@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Team;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 
 public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder>{
     // Δημιουργία νέου ArrayList
-    private final ArrayList<TeamModel> teamsList;
+    private final ArrayList<Team> teamsList;
 
-    public TeamAdapter(ArrayList<TeamModel> teams) {
+    public TeamAdapter(ArrayList<Team> teams) {
         // Θέσε το teamsList με το ArrayList απο τις παραμέτρους
         this.teamsList = teams;
     }
@@ -56,17 +57,17 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull @NotNull TeamAdapter.MyViewHolder holder, int position) {
         // Μετατροπή των int σε String
-        String code = String.valueOf(teamsList.get(position).code);
-        String sportCode = String.valueOf(teamsList.get(position).sport);
+        String code = String.valueOf(teamsList.get(position).getId());
+        String sportCode = String.valueOf(teamsList.get(position).getSport_id());
 
         // Θέσε τα field του holder με τις τιμές απο το teamsList
         holder.code.setText(code);
-        holder.name.setText(teamsList.get(position).name);
-        holder.stadium.setText(teamsList.get(position).stadium);
-        holder.city.setText(teamsList.get(position).city);
-        holder.country.setText(teamsList.get(position).country);
+        holder.name.setText(teamsList.get(position).getName());
+        holder.stadium.setText(teamsList.get(position).getCourt_name());
+        holder.city.setText(teamsList.get(position).getCity());
+        holder.country.setText(teamsList.get(position).getCountry());
         holder.sport.setText(sportCode);
-        holder.date.setText(teamsList.get(position).date);
+        holder.date.setText(teamsList.get(position).getYear());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.icedborn.sportsmanager.databases;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 //The Team.class reason of creation is for creating a table in the database.
@@ -15,7 +16,7 @@ public class Team {
 
     //With the annotation @PrimaryKey we set the primary key of the table "Team" as the ID of the team
     //With the annotation @ColumnInfo we set the title of the column that is being made in the next line
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "team_id")
     private long id;
 
@@ -35,7 +36,16 @@ public class Team {
 
 
 
-    //We are making the two basic constructors in our class
+    public Team( String name, String court_name, String city, String country, long sport_id, String year) {
+        this.name = name;
+        this.court_name = court_name;
+        this.city = city;
+        this.country = country;
+        this.sport_id = sport_id;
+        this.year = year;
+    }
+
+    @Ignore
     public Team(long id, String name, String court_name, String city, String country, long sport_id, String year) {
         this.id = id;
         this.name = name;

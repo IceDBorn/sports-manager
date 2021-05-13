@@ -1,14 +1,24 @@
 package com.icedborn.sportsmanager.ui.teams;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.Connections;
+import com.icedborn.sportsmanager.databases.Team;
+import com.icedborn.sportsmanager.databases.TeamDAO;
+
 import java.util.ArrayList;
 
 public class TeamsViewModel extends ViewModel {
-    private final MutableLiveData<String> mText;
-    private final ArrayList<TeamModel> teamsList;
+
+    private MutableLiveData<String> mText;
+    private ArrayList<Team> teamsList;
+    private Context context;
+    TeamDAO teamDAO;
 
     public TeamsViewModel() {
         mText = new MutableLiveData<>();
@@ -16,19 +26,15 @@ public class TeamsViewModel extends ViewModel {
 
         teamsList = new ArrayList<>();
 
-        SetTeamsInfo();
+
     }
 
     // Πρόσθεσε στοιχεία στη λίστα των ομάδων
-    private void SetTeamsInfo() {
-        /*teamsList.add(new TeamModel(1, "Axileas", "Neoxori", "Arta", "Greece", 8, "02/12/1967"));
-        teamsList.add(new TeamModel(2, "Anaggenisi", "Doxa", "Arta", "Greece", 7, "05/03/1982"));
-        teamsList.add(new TeamModel(3, "Doxa", "Anaggenisi", "Arta", "Greece", 6, "07/06/1967"));
-        teamsList.add(new TeamModel(4, "Panathinaikos", "Oaka", "Athens", "Greece", 6, "02/12/1967"));
-        teamsList.add(new TeamModel(5, "Olimpiakos", "Karaiskaki", "Athens", "Greece", 6, "02/12/1967"));
-        teamsList.add(new TeamModel(6, "Paok", "Toumpa", "Thessaloniki", "Greece", 3, "02/12/1967"));
-        teamsList.add(new TeamModel(7, "Aek", "Oaka", "Athens", "Greece", 2, "02/12/1967"));
-        teamsList.add(new TeamModel(8, "Kommeno", "Kommeno", "Arta", "Greece", 1, "02/12/1967"));*/
+    public void SetTeamsInfo(Context context) {
+        Connections connections = Connections.getInstance(context);
+        TeamDAO teamDAO = connections.getDatabase().getTeamDAO();
+        teamDAO.insert(new Team("fag","gag","gahs","gahsd",124,"1832"));
+        teamsList = (ArrayList)teamDAO.getAllTeams();
     }
 
     public LiveData<String> getText() {
@@ -36,7 +42,7 @@ public class TeamsViewModel extends ViewModel {
     }
 
     // Επέστρεψε την λίστα των ομάδων
-    public ArrayList<TeamModel> getTeams() {
+    public ArrayList<Team> getTeams() {
         return teamsList;
     }
 }
