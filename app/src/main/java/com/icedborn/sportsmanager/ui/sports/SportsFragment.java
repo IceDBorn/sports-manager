@@ -20,7 +20,7 @@ import com.icedborn.sportsmanager.databases.Sport;
 
 import java.util.ArrayList;
 
-public class SportsFragment extends Fragment {
+public class SportsFragment extends Fragment implements SportAdapter.OnSportListener {
     private RecyclerView recyclerView;
     private ArrayList<Sport> sportsList;
 
@@ -54,13 +54,13 @@ public class SportsFragment extends Fragment {
 
         // Δημιουργία adapter για το Recycler View
         SetAdapter();
-        
+
         return root;
     }
 
     private void SetAdapter() {
         // Δημιουργία νέου adapter με την λίστα αθλητών
-        SportAdapter adapter = new SportAdapter(sportsList);
+        SportAdapter adapter = new SportAdapter(sportsList, this);
         // Δημιουργία νέου Layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Θέσε το layoutManager ως το Layout Manager του Recycler View
@@ -69,5 +69,14 @@ public class SportsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Θέσε τον Adapter toy Recycler View με το adapter
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSportClick(int position) {
+        EditSportFragment editSport = new EditSportFragment();
+        editSport.sport = sportsList.get(position);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,editSport);
+        transaction.commit();
     }
 }
