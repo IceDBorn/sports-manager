@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
 import com.icedborn.sportsmanager.databases.Athlete;
@@ -28,6 +30,7 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class AddAthleteFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
@@ -53,6 +56,8 @@ public class AddAthleteFragment extends Fragment {
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
+
+        ((HideShowIconInterface) requireActivity()).hideBurger();
 
         date = root.findViewById(R.id.athleteBirthDate);
         // Θέσε την ημερομηνία στη τωρινή
@@ -135,7 +140,18 @@ public class AddAthleteFragment extends Fragment {
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, Athletes);
                 transaction.commit();
+                ((HideShowIconInterface) requireActivity()).showBurger();
             }
+        });
+
+        ImageButton imageButton = root.findViewById(R.id.addAthleteBackButton);
+
+        imageButton.setOnClickListener(v -> {
+            AthletesFragment Athletes = new AthletesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Athletes);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
         return root;
