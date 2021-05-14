@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
 import com.icedborn.sportsmanager.databases.Athlete;
@@ -42,6 +44,8 @@ public class EditAthleteFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.edit_athlete, container, false);
+
+        ((HideShowIconInterface) requireActivity()).hideBurger();
 
         etCity = root.findViewById(R.id.editAthleteCity);
         etCountry = root.findViewById(R.id.editAthleteCountry);
@@ -140,6 +144,7 @@ public class EditAthleteFragment extends Fragment {
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         transaction.replace(R.id.nav_host_fragment, Athletes);
                         transaction.commit();
+                        ((HideShowIconInterface) requireActivity()).showBurger();
                     }
 
                 }
@@ -170,6 +175,17 @@ public class EditAthleteFragment extends Fragment {
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, Athletes);
             transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
+        });
+
+        ImageButton imageButton = root.findViewById(R.id.addAthleteBackButton);
+
+        imageButton.setOnClickListener(v -> {
+            AthletesFragment Athletes = new AthletesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Athletes);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
         return root;
