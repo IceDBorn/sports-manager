@@ -1,5 +1,7 @@
 package com.icedborn.sportsmanager.databases;
 
+import com.google.firebase.firestore.Exclude;
+
 public class Match {
 
     private String id;
@@ -13,6 +15,7 @@ public class Match {
     public Match() {
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
@@ -42,7 +45,8 @@ public class Match {
         return date;
     }
 
-    public Match(String team1, String team2, String cityName, String country, String date, String sport) {
+    public Match(String id, String team1, String team2, String cityName, String country, String date, String sport) {
+        this.id = id;
         this.team1 = team1;
         this.team2 = team2;
         this.cityName = cityName;

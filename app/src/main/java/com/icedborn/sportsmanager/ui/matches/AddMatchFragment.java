@@ -109,7 +109,7 @@ public class AddMatchFragment extends Fragment {
 
             Match match = new Match();
             match.setTeam2(guestSpinner.getSelectedItem().toString());
-            match.setTeam1(guestSpinner.getSelectedItem().toString());
+            match.setTeam1(hostSpinner.getSelectedItem().toString());
             match.setSport(sportSpinner.getSelectedItem().toString());
             match.setDate(date.getText().toString());
             match.setCountry(teamCountry);

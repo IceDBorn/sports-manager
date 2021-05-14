@@ -58,8 +58,9 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
             if (task.isSuccessful()){
 
                 for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())){
+
                     String[] matchData = documentSnapshot.getData().values().toArray(new String[0]);
-                    matchesList.add(new Match(matchData[4],matchData[3],matchData[2],matchData[1],matchData[0],matchData[6]));
+                    matchesList.add(new Match(documentSnapshot.getId(),matchData[4],matchData[3],matchData[2],matchData[1],matchData[0],matchData[5]));
                 }
             }
 
