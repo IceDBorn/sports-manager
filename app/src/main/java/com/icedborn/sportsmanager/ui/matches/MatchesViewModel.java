@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.icedborn.sportsmanager.databases.Match;
+
 import java.util.ArrayList;
 
 public class MatchesViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-    private final ArrayList<MatchModel> matchesList;
+    private final ArrayList<Match> matchesList;
 
     public MatchesViewModel() {
         mText = new MutableLiveData<>();
@@ -22,7 +24,6 @@ public class MatchesViewModel extends ViewModel {
 
     // Πρόσθεσε στοιχεία στη λίστα των αγώνων
     private void SetMatchesInfo() {
-        /*matchesList.add(new MatchModel(1,4, 5, 6,"15/06/2021"));*/
     }
 
     public LiveData<String> getText() {
@@ -30,7 +31,7 @@ public class MatchesViewModel extends ViewModel {
     }
 
     // Επέστρεψε την λίστα των ομάδων
-    public ArrayList<MatchModel> getMatches() {
+    public ArrayList<Match> getMatches() {
         return matchesList;
     }
 }

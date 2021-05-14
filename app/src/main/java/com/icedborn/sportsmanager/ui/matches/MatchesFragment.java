@@ -15,13 +15,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Match;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchListener {
     private RecyclerView recyclerView;
-    private ArrayList<MatchModel> matchesList;
+    private ArrayList<Match> matchesList;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference matchRef = db.collection("Matches");
+    private TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +38,7 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         matchesList = matchesViewModel.getMatches();
 
         if (matchesList.size() == 0) {
-            final TextView textView = root.findViewById(R.id.addText);
+            textView = root.findViewById(R.id.addText);
             matchesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         }
 
@@ -39,15 +47,29 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         add.setOnClickListener(v -> {
             AddMatchFragment addMatch = new AddMatchFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,addMatch);
+            transaction.replace(R.id.nav_host_fragment, addMatch);
             transaction.commit();
         });
 
         // Δημιουργία νέου Recycler View
         recyclerView = root.findViewById(R.id.itemsView);
 
-        // Δημιουργία adapter για το Recycler View
-        SetAdapter();
+        matchRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+
+                for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())) {
+
+                    String[] matchData = documentSnapshot.getData().values().toArray(new String[0]);
+                    matchesList.add(new Match(documentSnapshot.getId(), matchData[4], matchData[5], matchData[3], matchData[1], matchData[0], matchData[6], matchData[2]));
+                }
+            }
+
+            SetAdapter();
+            if (matchesList.size() > 0) {
+                textView.setText("");
+            }
+
+        });
 
         return root;
     }
@@ -70,7 +92,7 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         EditMatchFragment editMatch = new EditMatchFragment();
         editMatch.match = matchesList.get(position);
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment,editMatch);
+        transaction.replace(R.id.nav_host_fragment, editMatch);
         transaction.commit();
     }
 }
