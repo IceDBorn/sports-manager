@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
 import com.icedborn.sportsmanager.databases.Connections;
@@ -39,6 +41,8 @@ public class AddTeamFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.add_team, container, false);
+
+        ((HideShowIconInterface) requireActivity()).hideBurger();
 
         etName = root.findViewById(R.id.addTeamName);
         etCountry = root.findViewById(R.id.addTeamCountry);
@@ -132,10 +136,19 @@ public class AddTeamFragment extends Fragment {
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment,Teams);
                 transaction.commit();
+                ((HideShowIconInterface) requireActivity()).showBurger();
             }
         });
 
+        ImageButton imageButton = root.findViewById(R.id.addTeamBackButton);
 
+        imageButton.setOnClickListener(v -> {
+            TeamsFragment Teams = new TeamsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Teams);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
+        });
 
         return root;
     }
