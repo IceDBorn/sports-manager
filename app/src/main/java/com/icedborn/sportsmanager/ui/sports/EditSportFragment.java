@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
@@ -29,6 +31,8 @@ public class EditSportFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.edit_sport, container, false);
+
+        ((HideShowIconInterface) requireActivity()).hideBurger();
 
         typeSpinner = root.findViewById(R.id.editSportTypes);
         genderSpinner = root.findViewById(R.id.editSportGenders);
@@ -74,6 +78,7 @@ public class EditSportFragment extends Fragment {
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         transaction.replace(R.id.nav_host_fragment, Sports);
                         transaction.commit();
+                        ((HideShowIconInterface) requireActivity()).showBurger();
                     }
                 }
             } catch (Exception e) {
@@ -103,7 +108,7 @@ public class EditSportFragment extends Fragment {
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, Sports);
             transaction.commit();
-
+            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
@@ -118,6 +123,16 @@ public class EditSportFragment extends Fragment {
 
         SetTypeSpinnerSelectedItem();
         SetGenderSpinnerSelectedItem();
+
+        ImageButton imageButton = root.findViewById(R.id.editSportBackButton);
+
+        imageButton.setOnClickListener(v -> {
+            SportsFragment Sports = new SportsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Sports);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
+        });
 
         return root;
     }
