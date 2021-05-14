@@ -5,6 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addMatchRemoveParticipant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@+id/addMatchRemove"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addMatchAdd"
+        app:layout_constraintTop_toTopOf="@+id/addMatchRemove"
+        app:srcCompat="@drawable/ic_menu_remove" />
+
+    <Spinner
+        android:id="@+id/addMatchRemove"
+        android:layout_width="197dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginRight="125dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMatchAdd" />
+
+    <Spinner
+        android:id="@+id/addMatchAdd"
+        android:layout_width="197dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginRight="125dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMatchDate" />
+
     <Spinner
         android:id="@+id/addMatchSport"
         android:layout_width="197dp"
@@ -99,5 +138,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addMatchAddParticipant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/light_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/addMatchAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addMatchAdd"
+        app:layout_constraintTop_toTopOf="@+id/addMatchAdd"
+        app:srcCompat="@drawable/ic_menu_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
