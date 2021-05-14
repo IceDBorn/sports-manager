@@ -28,7 +28,6 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.MyViewHolder
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView code;
         private final TextView name;
         private final TextView type;
         private final TextView gender;
@@ -38,7 +37,6 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.MyViewHolder
             super(view);
             this.onSportListener = onSportListener;
             // Σύνδεσε τa textview με τα textview απο το list_sports
-            code = view.findViewById(R.id.sportCode);
             name = view.findViewById(R.id.sportName);
             type = view.findViewById(R.id.sportType);
             gender = view.findViewById(R.id.sportGender);
@@ -66,11 +64,7 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SportAdapter.MyViewHolder holder, int position) {
-        // Μετατροπή του int code σε String
-        String code = String.valueOf(sportsList.get(position).getId());
-
         // Θέσε τα field του holder με τις τιμές απο το sportsList
-        holder.code.setText(code);
         holder.name.setText(sportsList.get(position).getName());
         holder.type.setText(sportsList.get(position).getType());
         holder.gender.setText(sportsList.get(position).getSex());
