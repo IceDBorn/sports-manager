@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
 import com.icedborn.sportsmanager.ui.teams.TeamsFragment;
@@ -22,8 +23,12 @@ import com.icedborn.sportsmanager.ui.teams.TeamsFragment;
 import java.util.Calendar;
 
 public class AddMatchFragment extends Fragment {
+
     private DatePickerDialog datePickerDialog;
     private TextView date;
+    private FirebaseFirestore db;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class AddMatchFragment extends Fragment {
             transaction.replace(R.id.nav_host_fragment, Matches);
             transaction.commit();
         });
+
+        db = FirebaseFirestore.getInstance();
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
