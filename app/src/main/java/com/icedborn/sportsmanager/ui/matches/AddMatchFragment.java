@@ -46,7 +46,7 @@ public class AddMatchFragment extends Fragment {
     private List<Sport> sportsList;
     private List<Team> teamsList;
     private List<Athlete> addAthletesList;
-    private ArrayList<String> removeAthletesList = new ArrayList<>();
+    private final ArrayList<String> removeAthletesList = new ArrayList<>();
     private ArrayAdapter<Athlete> addParticipantAdapter;
 
 
@@ -111,8 +111,7 @@ public class AddMatchFragment extends Fragment {
                 ArrayAdapter<String> removeParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, removeAthletesList);
                 removeParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 removeParticipantSpinner.setAdapter(removeParticipantAdapter);
-            }
-            else {
+            } else {
                 Toast toast = new Toast(this.getContext());
                 toast.setText("No more athletes to add");
                 toast.show();
@@ -129,8 +128,7 @@ public class AddMatchFragment extends Fragment {
                 ArrayAdapter<String> removeParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, removeAthletesList);
                 removeParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 removeParticipantSpinner.setAdapter(removeParticipantAdapter);
-            }
-            else {
+            } else {
                 Toast toast = new Toast(this.getContext());
                 toast.setText("No more athletes to remove");
                 toast.show();
@@ -153,6 +151,10 @@ public class AddMatchFragment extends Fragment {
             } else if (date.getText().equals("")) {
                 Toast toast = new Toast(this.getContext());
                 toast.setText("Date is empty");
+                toast.show();
+            } else if (removeParticipantSpinner.getCount() < sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add " + (sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) + " more athletes");
                 toast.show();
             } else {
                 String sportId = 0 + "";
