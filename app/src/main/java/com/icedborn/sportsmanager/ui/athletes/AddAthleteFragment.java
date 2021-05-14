@@ -39,6 +39,7 @@ public class AddAthleteFragment extends Fragment {
     EditText etName,etSurname,etCity,etCountry;
     Button btnAdd;
     private long sportId;
+    private String sportName;
 
 
 
@@ -83,6 +84,7 @@ public class AddAthleteFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Sport sport = (Sport) parent.getSelectedItem();
                 sportId = sport.getId();
+                sportName = sport.getName();
             }
 
             @Override
@@ -129,6 +131,7 @@ public class AddAthleteFragment extends Fragment {
                 athlete.setCountry(etCountry.getText().toString().trim());
                 athlete.setCity(etCity.getText().toString().trim());
                 athlete.setSport_id(sportId);
+                athlete.setSport_name(sportName);
                 athlete.setYear(date.getText().toString().trim());
 
 

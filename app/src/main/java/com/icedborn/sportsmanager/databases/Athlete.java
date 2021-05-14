@@ -32,6 +32,8 @@ public class Athlete {
 
     private long sport_id;
 
+    private String sport_name = null;
+
     @ColumnInfo(name = "date_of_birth")
     private String year;
 
@@ -120,6 +122,10 @@ public class Athlete {
         this.year = year;
     }
 
+    public void setSport_name(String name) {this.sport_name = name;}
+
+    public String getSport_name() {return sport_name;}
+
 
 
     //A simple toString in case we need it somewhere
@@ -131,7 +137,7 @@ public class Athlete {
                 ", surname='" + surname + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
-                ", sport_id=" + sport_id +
+                ", sport_name=" + sport_name +
                 ", year='" + year + '\'' +
                 '}';
     }
