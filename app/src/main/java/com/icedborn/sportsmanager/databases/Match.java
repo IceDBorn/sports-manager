@@ -10,7 +10,9 @@ public class Match {
     private String cityName;
     private String country;
     private String date;
-    private String sport;
+    private String sportName;
+    private String sportId;
+
 
     public Match() {
     }
@@ -45,26 +47,35 @@ public class Match {
         return date;
     }
 
-    public Match(String id, String team1, String team2, String cityName, String country, String date, String sport) {
+    public Match(String id, String team1, String team2, String cityName, String country, String date, String sportName, String sportId) {
         this.id = id;
         this.team1 = team1;
         this.team2 = team2;
         this.cityName = cityName;
         this.country = country;
         this.date = date;
-        this.sport = sport;
+        this.sportName = sportName;
+        this.sportId = sportId;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
 
-    public String getSport() {
-        return sport;
+    public String getSportName() {
+        return sportName;
     }
 
-    public void setSport(String sport) {
-        this.sport = sport;
+    public String getSportId() {
+        return sportId;
+    }
+
+    public void setSportName(String sportName) {
+        this.sportName = sportName;
+    }
+
+    public void setSportId(String sportId) {
+        this.sportId = sportId;
     }
 
     public String getTeam1() {

@@ -31,6 +31,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
         private final TextView guest;
         private final TextView sport;
         private final TextView date;
+        private final TextView city;
+        private final TextView country;
         private final OnMatchListener onMatchListener;
 
         public MyViewHolder(final View view, OnMatchListener onMatchListener) {
@@ -41,6 +43,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
             guest = view.findViewById(R.id.matchGuest);
             sport = view.findViewById(R.id.matchSportCode);
             date = view.findViewById(R.id.matchDate);
+            city = view.findViewById(R.id.matchCity);
+            country = view.findViewById(R.id.matchCountry);
 
             view.setOnClickListener(this);
         }
@@ -68,8 +72,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
         // Θέσε τα field του holder με τις τιμές απο το matchesList
         holder.host.setText(matchesList.get(position).getTeam1());
         holder.guest.setText(matchesList.get(position).getTeam2());
-        holder.sport.setText(matchesList.get(position).getSport());
+        holder.sport.setText(matchesList.get(position).getSportName());
         holder.date.setText(matchesList.get(position).getDate());
+        holder.city.setText(matchesList.get(position).getCityName());
+        holder.country.setText(matchesList.get(position).getCountry());
     }
 
     @Override

@@ -36,8 +36,9 @@ public class EditMatchFragment extends Fragment {
     private TextView date;
     private Spinner host, guest, sport;
     public Match match;
+    private String city;
+    private String country;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String teamCity,teamCountry;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +54,8 @@ public class EditMatchFragment extends Fragment {
         Button btnAdd = root.findViewById(R.id.editMatchSave);
         Button btnRemove = root.findViewById(R.id.editMatchRemove);
         date = root.findViewById(R.id.editMatchDate);
+
+
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
@@ -84,26 +87,22 @@ public class EditMatchFragment extends Fragment {
         guest.setAdapter(guestAdapter);
         sport.setAdapter(sportAdapter);
 
-
-
-        // TODO: Add button on click events
-
-        for (int i=0; i<teamList.size(); i++){
-
-            if (teamList.get(i).getName().equals(host.getSelectedItem().toString())){
-                teamCity = teamList.get(i).getCity();
-                teamCountry = teamList.get(i).getCountry();
-                break;
-            }
-        }
+        SetSpinnersSelectedItems(sportList, teamList);
 
         btnAdd.setOnClickListener(v -> {
+
+            for (int i = 0; i < teamList.size(); i ++) {
+                if (teamList.get(i).getName().equals(host.getSelectedItem().toString())) {
+                    city = teamList.get(i).getCity();
+                    country = teamList.get(i).getCountry();
+                }
+            }
 
 
             DocumentReference updateRef = db.document("Matches/" + match.getId());
 
-            updateRef.update("cityName",teamCity);
-            updateRef.update("country",teamCountry);
+            updateRef.update("cityName",city);
+            updateRef.update("country",country);
             updateRef.update("date", date.getText().toString());
             updateRef.update("sport",sport.getSelectedItem().toString());
             updateRef.update("team1",host.getSelectedItem().toString());
@@ -127,10 +126,6 @@ public class EditMatchFragment extends Fragment {
             transaction.commit();
             ((HideShowIconInterface) requireActivity()).showBurger();
         });
-
-
-
-
 
         ImageButton imageButton = root.findViewById(R.id.editMatchBackButton);
 
@@ -162,5 +157,28 @@ public class EditMatchFragment extends Fragment {
 
         // Δημιουργία DatePickerDialog με τα στοιχεία απο παραπάνω
         datePickerDialog = new DatePickerDialog(this.getContext(), style, dateSetListener, year, month, day);
+    }
+
+    private void SetSpinnersSelectedItems(List<Sport> sportsList, List<Team> teamsList) {
+        for (int i = 0; i < sportsList.size(); i++) {
+            if (Integer.parseInt(match.getSportId()) == sportsList.get(i).getId()) {
+                sport.setSelection(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < teamsList.size(); i++) {
+            if (match.getTeam1().equals(teamsList.get(i).getName())) {
+                host.setSelection(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < teamsList.size(); i++) {
+            if (match.getTeam2().equals(teamsList.get(i).getName())) {
+                guest.setSelection(i);
+                break;
+            }
+        }
     }
 }

@@ -47,7 +47,7 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         add.setOnClickListener(v -> {
             AddMatchFragment addMatch = new AddMatchFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,addMatch);
+            transaction.replace(R.id.nav_host_fragment, addMatch);
             transaction.commit();
         });
 
@@ -55,12 +55,12 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         recyclerView = root.findViewById(R.id.itemsView);
 
         matchRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
 
-                for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())){
+                for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())) {
 
                     String[] matchData = documentSnapshot.getData().values().toArray(new String[0]);
-                    matchesList.add(new Match(documentSnapshot.getId(),matchData[4],matchData[3],matchData[2],matchData[1],matchData[0],matchData[5]));
+                    matchesList.add(new Match(documentSnapshot.getId(), matchData[4], matchData[5], matchData[3], matchData[1], matchData[0], matchData[6], matchData[2]));
                 }
             }
 
@@ -92,7 +92,7 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
         EditMatchFragment editMatch = new EditMatchFragment();
         editMatch.match = matchesList.get(position);
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment,editMatch);
+        transaction.replace(R.id.nav_host_fragment, editMatch);
         transaction.commit();
     }
 }
