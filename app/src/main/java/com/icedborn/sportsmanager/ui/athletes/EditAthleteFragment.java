@@ -39,6 +39,7 @@ public class EditAthleteFragment extends Fragment {
     private Spinner spinner;
     private long sportId;
     public Athlete athlete;
+    private String sportName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class EditAthleteFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Sport sport = (Sport) parent.getSelectedItem();
                 sportId = sport.getId();
+                sportName = sport.getName();
             }
 
             @Override
@@ -137,6 +139,7 @@ public class EditAthleteFragment extends Fragment {
                         athlete.setCity(etCity.getText().toString().trim());
                         athlete.setSport_id(sportId);
                         athlete.setYear(date.getText().toString().trim());
+                        athlete.setSport_name(sportName);
 
                         athleteDAO.update(athlete);
 

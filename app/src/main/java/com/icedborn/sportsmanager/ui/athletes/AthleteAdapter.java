@@ -30,7 +30,6 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
         private final TextView name;
         private final TextView surname;
         private final TextView city;
-        private final TextView code;
         private final TextView country;
         private final TextView date;
         private final TextView sport;
@@ -43,7 +42,6 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
             name = view.findViewById(R.id.athleteName);
             surname = view.findViewById(R.id.athleteSurname);
             city = view.findViewById(R.id.athleteCity);
-            code = view.findViewById(R.id.athleteCode);
             country = view.findViewById(R.id.athleteCountry);
             date = view.findViewById(R.id.athleteDate);
             sport = view.findViewById(R.id.athleteSportCode);
@@ -71,20 +69,13 @@ public class AthleteAdapter extends RecyclerView.Adapter<AthleteAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull AthleteAdapter.MyViewHolder holder, int position) {
-        // Μετατροπή του int code σε String
-        String code = String.valueOf(athletesList.get(position).getId());
-
-        // Μετατροπή του int sport σε String
-        String sport = String.valueOf(athletesList.get(position).getSport_id());
-
         // Θέσε τα field του holder με τις τιμές απο το athletesList
         holder.name.setText(athletesList.get(position).getName());
         holder.surname.setText(athletesList.get(position).getSurname());
         holder.city.setText(athletesList.get(position).getCity());
-        holder.code.setText(code);
         holder.country.setText(athletesList.get(position).getCountry());
         holder.date.setText(athletesList.get(position).getYear());
-        holder.sport.setText(sport);
+        holder.sport.setText(athletesList.get(position).getSport_name());
     }
 
     @Override
