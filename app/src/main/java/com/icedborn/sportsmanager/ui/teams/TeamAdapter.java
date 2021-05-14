@@ -28,7 +28,6 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder>{
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView code;
         private final TextView name;
         private final TextView stadium;
         private final TextView city;
@@ -41,7 +40,6 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder>{
             super(view);
             this.onTeamListener = onTeamListener;
             // Σύνδεσε τa textview με τα textview απο το list_sports
-            code = view.findViewById(R.id.teamCode);
             name = view.findViewById(R.id.teamName);
             stadium = view.findViewById(R.id.teamStadium);
             city = view.findViewById(R.id.teamCity);
@@ -72,17 +70,13 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull TeamAdapter.MyViewHolder holder, int position) {
-        // Μετατροπή των int σε String
-        String code = String.valueOf(teamsList.get(position).getId());
-        String sportCode = String.valueOf(teamsList.get(position).getSport_id());
 
         // Θέσε τα field του holder με τις τιμές απο το teamsList
-        holder.code.setText(code);
         holder.name.setText(teamsList.get(position).getName());
         holder.stadium.setText(teamsList.get(position).getCourt_name());
         holder.city.setText(teamsList.get(position).getCity());
         holder.country.setText(teamsList.get(position).getCountry());
-        holder.sport.setText(sportCode);
+        holder.sport.setText(teamsList.get(position).getSport_name());
         holder.date.setText(teamsList.get(position).getYear());
     }
 
