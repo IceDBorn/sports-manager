@@ -8,23 +8,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
-import com.icedborn.sportsmanager.databases.Athlete;
-import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
-import com.icedborn.sportsmanager.ui.athletes.AthletesFragment;
 
 public class EditSportFragment extends Fragment {
 
     private EditText etName;
-    private Spinner typeSpinner,genderSpinner;
+    private Spinner typeSpinner, genderSpinner;
     public Sport sport;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,7 +47,6 @@ public class EditSportFragment extends Fragment {
         // Τα γένη των αθλητών για το κάθε άθλημα
         String[] genders = {"Male", "Female", "Both"};
 
-        // TODO: Άλλαξε την μέθοδο για να κάνει update αντί για insert
         btnAdd.setOnClickListener(v -> {
 
             try {
@@ -58,29 +55,32 @@ public class EditSportFragment extends Fragment {
                 Sport sport = sportDAO.getSportById(id);
 
 
-                if (sport==null){
-                    System.out.println("Athlete does not exist");
-                }else{
+                if (sport == null) {
+                    System.out.println("Sport does not exist");
+                } else {
 
-                    sport.setName(etName.getText().toString().trim());
-                    sport.setType(typeSpinner.getSelectedItem().toString());
-                    sport.setSex(genderSpinner.getSelectedItem().toString());
+                    if (etName.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Name is empty");
+                        toast.show();
+                    } else {
+                        sport.setName(etName.getText().toString().trim());
+                        sport.setType(typeSpinner.getSelectedItem().toString());
+                        sport.setSex(genderSpinner.getSelectedItem().toString());
 
-                    sportDAO.update(sport);
+                        sportDAO.update(sport);
 
+                        SportsFragment Sports = new SportsFragment();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_host_fragment, Sports);
+                        transaction.commit();
+                    }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-
-
-            SportsFragment Sports = new SportsFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Sports);
-            transaction.commit();
         });
 
-        // TODO: Άλλαξε την μέθοδο για να κάνει remove αντί για insert
         btnRemove.setOnClickListener(v -> {
             try {
                 Connections c1 = Connections.getInstance(getContext());
@@ -88,20 +88,20 @@ public class EditSportFragment extends Fragment {
                 Sport sport = sportDAO.getSportById(id);
 
 
-                if (sport==null){
+                if (sport == null) {
                     System.out.println("Sport does not exist");
-                }else{
+                } else {
 
                     sportDAO.delete(sport);
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
             SportsFragment Sports = new SportsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Sports);
+            transaction.replace(R.id.nav_host_fragment, Sports);
             transaction.commit();
 
         });
