@@ -1,5 +1,6 @@
 package com.icedborn.sportsmanager.ui.sports;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,11 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 
 public class EditSportFragment extends Fragment {
 
-    private EditText etName;
+    private EditText etName, participants;
     private Spinner typeSpinner, genderSpinner;
     public Sport sport;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -39,8 +41,10 @@ public class EditSportFragment extends Fragment {
         etName = root.findViewById(R.id.editSportName);
         Button btnAdd = root.findViewById(R.id.editSportSave);
         Button btnRemove = root.findViewById(R.id.editSportRemove);
+        participants = root.findViewById(R.id.editParticipants);
 
         etName.setText(sport.getName());
+        participants.setText(sport.getParticipants() + "");
 
         //ID του Sport
         long id = sport.getId();
@@ -67,10 +71,15 @@ public class EditSportFragment extends Fragment {
                         Toast toast = new Toast(this.getContext());
                         toast.setText("Name is empty");
                         toast.show();
+                    } else if (participants.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Participants is empty");
+                        toast.show();
                     } else {
                         sport.setName(etName.getText().toString().trim());
                         sport.setType(typeSpinner.getSelectedItem().toString());
                         sport.setSex(genderSpinner.getSelectedItem().toString());
+                        sport.setParticipants(Integer.parseInt(participants.getText().toString().trim()));
 
                         sportDAO.update(sport);
 

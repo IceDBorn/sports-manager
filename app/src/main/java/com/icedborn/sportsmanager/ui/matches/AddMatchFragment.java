@@ -97,7 +97,7 @@ public class AddMatchFragment extends Fragment {
                 toast.show();
             } else if (hostSpinner.getSelectedItem() == guestSpinner.getSelectedItem()) {
                 Toast toast = new Toast(this.getContext());
-                toast.setText("Team " + hostSpinner.getSelectedItem().toString() + " can't be the host and  the guest at the same match");
+                toast.setText("Team " + hostSpinner.getSelectedItem().toString() + " can't be the host and the guest at the same match");
                 toast.show();
             } else if (sportSpinner.getSelectedItem() == null) {
                 Toast toast = new Toast(this.getContext());
