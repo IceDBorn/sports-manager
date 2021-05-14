@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
+import com.icedborn.sportsmanager.databases.Match;
 
 import java.util.Calendar;
 
@@ -27,7 +28,7 @@ public class EditMatchFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TextView date;
     private Spinner host, guest, sport;
-    public MatchModel match;
+    public Match match;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
