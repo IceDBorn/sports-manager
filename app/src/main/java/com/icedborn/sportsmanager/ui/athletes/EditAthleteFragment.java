@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class EditAthleteFragment extends Fragment {
+
     private DatePickerDialog datePickerDialog;
     private TextView date;
     private EditText etName,etSurname,etCity,etCountry;
@@ -56,6 +57,7 @@ public class EditAthleteFragment extends Fragment {
         etCountry.setText(athlete.getCountry());
         date.setText(athlete.getYear());
 
+        long id = athlete.getId();
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
 
@@ -89,17 +91,31 @@ public class EditAthleteFragment extends Fragment {
 
         // TODO: Άλλαξε αυτή τη μέθοδο για να κάνει update τον αθλητή αντί να προσθέτει καινούριο
         btnAdd.setOnClickListener(v -> {
-            Athlete athlete = new Athlete();
-            athlete.setName(etName.getText().toString().trim());
-            athlete.setSurname(etSurname.getText().toString().trim());
-            athlete.setCountry(etCountry.getText().toString().trim());
-            athlete.setCity(etCity.getText().toString().trim());
-            athlete.setSport_id(sportId);
-            athlete.setYear(date.getText().toString().trim());
 
-            Connections c1 = Connections.getInstance(getContext());
-            AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
-            athleteDAO.insert(athlete);
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+                Athlete athlete = athleteDAO.getAthleteById(id);
+
+
+                if (athlete==null){
+                    System.out.println("Athlete does not exist");
+                }else{
+
+                    athlete.setName(etName.getText().toString().trim());
+                    athlete.setSurname(etSurname.getText().toString().trim());
+                    athlete.setCountry(etCountry.getText().toString().trim());
+                    athlete.setCity(etCity.getText().toString().trim());
+                    athlete.setSport_id(sportId);
+                    athlete.setYear(date.getText().toString().trim());
+
+                    athleteDAO.update(athlete);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
 
             AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -109,17 +125,22 @@ public class EditAthleteFragment extends Fragment {
 
         // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
         btnRemove.setOnClickListener(v -> {
-            Athlete athlete = new Athlete();
-            athlete.setName(etName.getText().toString().trim());
-            athlete.setSurname(etSurname.getText().toString().trim());
-            athlete.setCountry(etCountry.getText().toString().trim());
-            athlete.setCity(etCity.getText().toString().trim());
-            athlete.setSport_id(sportId);
-            athlete.setYear(date.getText().toString().trim());
 
-            Connections c1 = Connections.getInstance(getContext());
-            AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
-            athleteDAO.insert(athlete);
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+                Athlete athlete = athleteDAO.getAthleteById(id);
+
+                if (athlete==null){
+                    System.out.println("Athlete does not exist");
+                }else{
+
+                    athleteDAO.delete(athlete);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
 
             AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

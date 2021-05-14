@@ -19,11 +19,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
 import com.icedborn.sportsmanager.databases.Team;
 import com.icedborn.sportsmanager.databases.TeamDAO;
+import com.icedborn.sportsmanager.ui.athletes.AthletesFragment;
 
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +58,9 @@ public class EditTeamFragment extends Fragment {
         etCity.setText(team.getCity());
         etStadium.setText(team.getCourt_name());
         date.setText(team.getYear());
+
+        //Team ID
+        long id = team.getId();
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
@@ -89,41 +95,62 @@ public class EditTeamFragment extends Fragment {
 
         // TODO: Άλλαξε την μέθοδο απο insert σε update
         btnAdd.setOnClickListener(v -> {
-            Team team = new Team();
-            team.setName(etName.getText().toString().trim());
-            team.setCountry(etCountry.getText().toString().trim());
-            team.setCity(etCity.getText().toString().trim());
-            team.setCourt_name(etStadium.getText().toString().trim());
-            team.setYear(date.getText().toString());
-            team.setSport_id(sportId);
 
-            Connections c1 = Connections.getInstance(getContext());
-            TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
-            teamDAO.insert(team);
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
+                Team team = teamDAO.getTeamById(id);
 
-            TeamsFragment Teams = new TeamsFragment();
+
+                if (team==null){
+                    System.out.println("Team does not exist");
+                }else{
+
+                    team.setName(etName.getText().toString().trim());
+                    team.setCountry(etCountry.getText().toString().trim());
+                    team.setCity(etCity.getText().toString().trim());
+                    team.setCourt_name(etStadium.getText().toString().trim());
+                    team.setYear(date.getText().toString());
+                    team.setSport_id(sportId);
+
+                    teamDAO.update(team);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+
+            AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Teams);
+            transaction.replace(R.id.nav_host_fragment,Athletes);
             transaction.commit();
         });
 
         // TODO: Άλλαξε την μέθοδο απο insert σε remove
         btnRemove.setOnClickListener(v -> {
-            Team team = new Team();
-            team.setName(etName.getText().toString().trim());
-            team.setCountry(etCountry.getText().toString().trim());
-            team.setCity(etCity.getText().toString().trim());
-            team.setCourt_name(etStadium.getText().toString().trim());
-            team.setYear(date.getText().toString());
-            team.setSport_id(sportId);
 
-            Connections c1 = Connections.getInstance(getContext());
-            TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
-            teamDAO.insert(team);
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
+                Team team = teamDAO.getTeamById(id);
 
-            TeamsFragment Teams = new TeamsFragment();
+
+                if (team==null){
+                    System.out.println("Team does not exist");
+                }else{
+
+                    teamDAO.delete(team);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+
+            AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Teams);
+            transaction.replace(R.id.nav_host_fragment,Athletes);
             transaction.commit();
         });
 

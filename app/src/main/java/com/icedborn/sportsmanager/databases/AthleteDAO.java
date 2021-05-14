@@ -16,7 +16,7 @@ public interface AthleteDAO {
 
     //The special annotation @Insert is used to insert something in the database.
     @Insert
-    void insert (Athlete athlete);
+    long insert (Athlete athlete);
 
     //The special annotation @Delete is used to delete something from the database.
     @Delete

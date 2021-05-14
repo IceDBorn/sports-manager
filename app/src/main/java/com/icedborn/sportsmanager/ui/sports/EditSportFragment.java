@@ -14,9 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
+import com.icedborn.sportsmanager.ui.athletes.AthletesFragment;
 
 public class EditSportFragment extends Fragment {
 
@@ -37,6 +40,9 @@ public class EditSportFragment extends Fragment {
 
         etName.setText(sport.getName());
 
+        //ID του Sport
+        long id = sport.getId();
+
         // Οι τύποι των αθλημάτων
         String[] types = {"Individual", "Team"};
 
@@ -45,38 +51,59 @@ public class EditSportFragment extends Fragment {
 
         // TODO: Άλλαξε την μέθοδο για να κάνει update αντί για insert
         btnAdd.setOnClickListener(v -> {
-            Sport sport = new Sport();
-            sport.setName(etName.getText().toString().trim());
-            sport.setType(typeSpinner.getSelectedItem().toString());
-            sport.setSex(genderSpinner.getSelectedItem().toString());
+
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                SportDAO sportDAO = c1.getDatabase().getSportDAO();
+                Sport sport = sportDAO.getSportById(id);
 
 
-            Connections c= Connections.getInstance(getContext());
-            SportDAO sportDAO = c.getDatabase().getSportDAO();
-            sportDAO.insert(sport);
+                if (sport==null){
+                    System.out.println("Athlete does not exist");
+                }else{
 
-            SportsFragment Sports = new SportsFragment();
+                    sport.setName(etName.getText().toString().trim());
+                    sport.setType(typeSpinner.getSelectedItem().toString());
+                    sport.setSex(genderSpinner.getSelectedItem().toString());
+
+                    sportDAO.update(sport);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+
+            AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Sports);
+            transaction.replace(R.id.nav_host_fragment,Athletes);
             transaction.commit();
         });
 
         // TODO: Άλλαξε την μέθοδο για να κάνει remove αντί για insert
         btnRemove.setOnClickListener(v -> {
-            Sport sport = new Sport();
-            sport.setName(etName.getText().toString().trim());
-            sport.setType(typeSpinner.getSelectedItem().toString());
-            sport.setSex(genderSpinner.getSelectedItem().toString());
+            try {
+                Connections c1 = Connections.getInstance(getContext());
+                SportDAO sportDAO = c1.getDatabase().getSportDAO();
+                Sport sport = sportDAO.getSportById(id);
 
 
-            Connections c= Connections.getInstance(getContext());
-            SportDAO sportDAO = c.getDatabase().getSportDAO();
-            sportDAO.insert(sport);
+                if (sport==null){
+                    System.out.println("Sport does not exist");
+                }else{
 
-            SportsFragment Sports = new SportsFragment();
+                    sportDAO.delete(sport);
+
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Sports);
+            transaction.replace(R.id.nav_host_fragment,Athletes);
             transaction.commit();
+
         });
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
