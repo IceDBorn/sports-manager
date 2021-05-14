@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
-import com.icedborn.sportsmanager.databases.Match;
 
 import java.util.Calendar;
 
@@ -38,20 +38,6 @@ public class EditMatchFragment extends Fragment {
         Button btnAdd = root.findViewById(R.id.editMatchSave);
         Button btnRemove = root.findViewById(R.id.editMatchRemove);
         date = root.findViewById(R.id.editMatchDate);
-
-        btnAdd.setOnClickListener(v -> {
-            MatchesFragment Matches = new MatchesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, Matches);
-            transaction.commit();
-        });
-
-        btnRemove.setOnClickListener(v -> {
-            MatchesFragment Matches = new MatchesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, Matches);
-            transaction.commit();
-        });
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
@@ -83,6 +69,34 @@ public class EditMatchFragment extends Fragment {
         sport.setAdapter(sportAdapter);
 
         // TODO: Add button on click events
+
+        btnAdd.setOnClickListener(v -> {
+            if (host.getCount() < 2) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add two teams before adding a match");
+                toast.show();
+            } else if (guest.getSelectedItem() == host.getSelectedItem()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Team " + host.getSelectedItem().toString() + " can't be host and guest at the same match");
+                toast.show();
+            } else if (sport.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before adding a match");
+                toast.show();
+            } else {
+                MatchesFragment Matches = new MatchesFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, Matches);
+                transaction.commit();
+            }
+        });
+
+        btnRemove.setOnClickListener(v -> {
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+        });
 
         return root;
     }

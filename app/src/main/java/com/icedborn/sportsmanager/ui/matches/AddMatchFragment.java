@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
-import com.icedborn.sportsmanager.ui.teams.TeamsFragment;
 
 import java.util.Calendar;
 
@@ -29,20 +29,12 @@ public class AddMatchFragment extends Fragment {
     private FirebaseFirestore db;
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.add_match, container, false);
 
         Button btnAdd = root.findViewById(R.id.addMatchSave);
-
-        btnAdd.setOnClickListener(v -> {
-            MatchesFragment Matches = new MatchesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, Matches);
-            transaction.commit();
-        });
 
         db = FirebaseFirestore.getInstance();
 
@@ -79,6 +71,27 @@ public class AddMatchFragment extends Fragment {
         hostSpinner.setAdapter(hostAdapter);
         guestSpinner.setAdapter(guestAdapter);
         sportSpinner.setAdapter(sportAdapter);
+
+        btnAdd.setOnClickListener(v -> {
+            if (hostSpinner.getCount() < 2) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add two teams before adding a match");
+                toast.show();
+            } else if (guestSpinner.getSelectedItem() == hostSpinner.getSelectedItem()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Team " + hostSpinner.getSelectedItem().toString() + " can't be host and guest at the same match");
+                toast.show();
+            } else if (sportSpinner.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before adding a match");
+                toast.show();
+            } else {
+                MatchesFragment Matches = new MatchesFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, Matches);
+                transaction.commit();
+            }
+        });
 
         return root;
     }
