@@ -74,9 +74,9 @@ public class EditSportFragment extends Fragment {
             }
 
 
-            AthletesFragment Athletes = new AthletesFragment();
+            SportsFragment Sports = new SportsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.replace(R.id.nav_host_fragment,Sports);
             transaction.commit();
         });
 
@@ -99,9 +99,9 @@ public class EditSportFragment extends Fragment {
                 System.out.println(e.getMessage());
             }
 
-            AthletesFragment Athletes = new AthletesFragment();
+            SportsFragment Sports = new SportsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.replace(R.id.nav_host_fragment,Sports);
             transaction.commit();
 
         });

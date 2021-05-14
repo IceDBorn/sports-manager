@@ -121,9 +121,9 @@ public class EditTeamFragment extends Fragment {
             }
 
 
-            AthletesFragment Athletes = new AthletesFragment();
+            TeamsFragment Teams = new TeamsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.replace(R.id.nav_host_fragment,Teams);
             transaction.commit();
         });
 
@@ -148,9 +148,9 @@ public class EditTeamFragment extends Fragment {
             }
 
 
-            AthletesFragment Athletes = new AthletesFragment();
+            TeamsFragment Teams = new TeamsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.replace(R.id.nav_host_fragment,Teams);
             transaction.commit();
         });
 
