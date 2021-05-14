@@ -49,7 +49,7 @@ public class EditSportFragment extends Fragment {
         String[] types = {"Individual", "Team"};
 
         // Τα γένη των αθλητών για το κάθε άθλημα
-        String[] genders = {"Male", "Female", "Both"};
+        String[] genders = {"Male", "Female", "Male/Female"};
 
         btnAdd.setOnClickListener(v -> {
 
