@@ -90,7 +90,6 @@ public class EditAthleteFragment extends Fragment {
 
         SetSpinnerSelectedItem(sportList);
 
-        // TODO: Άλλαξε αυτή τη μέθοδο για να κάνει update τον αθλητή αντί να προσθέτει καινούριο
         btnAdd.setOnClickListener(v -> {
 
             try {
@@ -149,7 +148,6 @@ public class EditAthleteFragment extends Fragment {
             }
         });
 
-        // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
         btnRemove.setOnClickListener(v -> {
 
             try {
