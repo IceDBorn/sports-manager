@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,7 +37,7 @@ public class AddMatchFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TextView date;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Spinner hostSpinner,guestSpinner,sportSpinner;
+    private Spinner hostSpinner, guestSpinner, sportSpinner;
     private final CollectionReference matchRef = db.collection("Matches");
     private List<Sport> sportsList;
     private List<Team> teamsList;
@@ -68,12 +69,12 @@ public class AddMatchFragment extends Fragment {
 
         sportSpinner = root.findViewById(R.id.addMatchSport);
 
-        Connections c= Connections.getInstance(getContext());
+        Connections c = Connections.getInstance(getContext());
 
-        SportDAO sportDAO=c.getDatabase().getSportDAO();
+        SportDAO sportDAO = c.getDatabase().getSportDAO();
         sportsList = sportDAO.getAllSports();
 
-        TeamDAO teamDAO=c.getDatabase().getTeamDAO();
+        TeamDAO teamDAO = c.getDatabase().getTeamDAO();
         teamsList = teamDAO.getAllTeams();
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
@@ -90,42 +91,58 @@ public class AddMatchFragment extends Fragment {
         sportSpinner.setAdapter(sportAdapter);
 
         btnAdd.setOnClickListener(v -> {
+            if (hostSpinner.getCount() < 2) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add two teams before adding a match");
+                toast.show();
+            } else if (hostSpinner.getSelectedItem() == guestSpinner.getSelectedItem()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Team " + hostSpinner.getSelectedItem().toString() + " can't be the host and  the guest at the same match");
+                toast.show();
+            } else if (sportSpinner.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before adding a match");
+                toast.show();
+            } else if (date.getText().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Date is empty");
+                toast.show();
+            } else {
+                String sportId = 0 + "";
+                String country = "";
+                String city = "";
 
-            String sportId = 0 + "";
-            String country = "";
-            String city = "";
-
-            for (int i = 0; i < sportsList.size(); i++) {
-                if (sportsList.get(i).getName().equals(sportSpinner.getSelectedItem().toString())) {
-                    sportId = sportsList.get(i).getId() + "";
-                    break;
+                for (int i = 0; i < sportsList.size(); i++) {
+                    if (sportsList.get(i).getName().equals(sportSpinner.getSelectedItem().toString())) {
+                        sportId = sportsList.get(i).getId() + "";
+                        break;
+                    }
                 }
-            }
 
-            for (int i = 0; i < teamsList.size(); i++) {
-                if (teamsList.get(i).getName().equals(hostSpinner.getSelectedItem().toString())) {
-                    country = teamsList.get(i).getCountry();
-                    city = teamsList.get(i).getCity();
-                    break;
+                for (int i = 0; i < teamsList.size(); i++) {
+                    if (teamsList.get(i).getName().equals(hostSpinner.getSelectedItem().toString())) {
+                        country = teamsList.get(i).getCountry();
+                        city = teamsList.get(i).getCity();
+                        break;
+                    }
                 }
+                Match match = new Match();
+                match.setTeam2(guestSpinner.getSelectedItem().toString());
+                match.setTeam1(hostSpinner.getSelectedItem().toString());
+                match.setSportName(sportSpinner.getSelectedItem().toString());
+                match.setDate(date.getText().toString());
+                match.setCountry(country);
+                match.setCityName(city);
+                match.setSportId(sportId);
+
+                matchRef.add(match);
+
+                MatchesFragment Matches = new MatchesFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, Matches);
+                transaction.commit();
+                ((HideShowIconInterface) requireActivity()).showBurger();
             }
-            Match match = new Match();
-            match.setTeam2(guestSpinner.getSelectedItem().toString());
-            match.setTeam1(hostSpinner.getSelectedItem().toString());
-            match.setSportName(sportSpinner.getSelectedItem().toString());
-            match.setDate(date.getText().toString());
-            match.setCountry(country);
-            match.setCityName(city);
-            match.setSportId(sportId);
-
-            matchRef.add(match);
-
-            MatchesFragment Matches = new MatchesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, Matches);
-            transaction.commit();
-            ((HideShowIconInterface) requireActivity()).showBurger();
-
         });
 
         ImageButton imageButton = root.findViewById(R.id.addMatchBackButton);

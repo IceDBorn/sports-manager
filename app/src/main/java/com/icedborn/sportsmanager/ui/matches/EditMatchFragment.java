@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -56,7 +57,6 @@ public class EditMatchFragment extends Fragment {
         date = root.findViewById(R.id.editMatchDate);
 
 
-
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
 
@@ -66,12 +66,12 @@ public class EditMatchFragment extends Fragment {
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        Connections c= Connections.getInstance(getContext());
+        Connections c = Connections.getInstance(getContext());
 
-        SportDAO sportDAO=c.getDatabase().getSportDAO();
+        SportDAO sportDAO = c.getDatabase().getSportDAO();
         List<Sport> sportList = sportDAO.getAllSports();
 
-        TeamDAO teamDAO=c.getDatabase().getTeamDAO();
+        TeamDAO teamDAO = c.getDatabase().getTeamDAO();
         List<Team> teamList = teamDAO.getAllTeams();
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
@@ -91,28 +91,47 @@ public class EditMatchFragment extends Fragment {
 
         btnAdd.setOnClickListener(v -> {
 
-            for (int i = 0; i < teamList.size(); i ++) {
-                if (teamList.get(i).getName().equals(host.getSelectedItem().toString())) {
-                    city = teamList.get(i).getCity();
-                    country = teamList.get(i).getCountry();
+            if (host.getCount() < 2) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add two teams before editing a match");
+                toast.show();
+            } else if (host.getSelectedItem() == guest.getSelectedItem()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Team " + host.getSelectedItem().toString() + " can't be the host and  the guest at the same match");
+                toast.show();
+            } else if (sport.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before editing a match");
+                toast.show();
+            } else if (date.getText().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Date is empty");
+                toast.show();
+            } else {
+
+                for (int i = 0; i < teamList.size(); i++) {
+                    if (teamList.get(i).getName().equals(host.getSelectedItem().toString())) {
+                        city = teamList.get(i).getCity();
+                        country = teamList.get(i).getCountry();
+                    }
                 }
+
+
+                DocumentReference updateRef = db.document("Matches/" + match.getId());
+
+                updateRef.update("cityName", city);
+                updateRef.update("country", country);
+                updateRef.update("date", date.getText().toString());
+                updateRef.update("sport", sport.getSelectedItem().toString());
+                updateRef.update("team1", host.getSelectedItem().toString());
+                updateRef.update("team2", guest.getSelectedItem().toString());
+
+                MatchesFragment Matches = new MatchesFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, Matches);
+                transaction.commit();
+                ((HideShowIconInterface) requireActivity()).showBurger();
             }
-
-
-            DocumentReference updateRef = db.document("Matches/" + match.getId());
-
-            updateRef.update("cityName",city);
-            updateRef.update("country",country);
-            updateRef.update("date", date.getText().toString());
-            updateRef.update("sport",sport.getSelectedItem().toString());
-            updateRef.update("team1",host.getSelectedItem().toString());
-            updateRef.update("team2",guest.getSelectedItem().toString());
-
-            MatchesFragment Matches = new MatchesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, Matches);
-            transaction.commit();
-            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
         btnRemove.setOnClickListener(v -> {
