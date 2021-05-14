@@ -26,15 +26,18 @@ public class Sport {
 
     private String sex;
 
+    private int participants;
+
 
 
     //We are making the two basic constructors in our class
 
-    public Sport( String name, String type, String sex) {
+    public Sport( String name, String type, String sex, int participants) {
 
         this.name = name;
         this.type = type;
         this.sex = sex;
+        this.participants = participants;
     }
 
     @Ignore
@@ -81,6 +84,10 @@ public class Sport {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public void setParticipants(int participants) {this.participants = participants;}
+
+    public int getParticipants() {return participants;}
 
 
 

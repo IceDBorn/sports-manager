@@ -97,7 +97,7 @@ public class EditMatchFragment extends Fragment {
                 toast.show();
             } else if (host.getSelectedItem() == guest.getSelectedItem()) {
                 Toast toast = new Toast(this.getContext());
-                toast.setText("Team " + host.getSelectedItem().toString() + " can't be the host and  the guest at the same match");
+                toast.setText("Team " + host.getSelectedItem().toString() + " can't be the host and the guest at the same match");
                 toast.show();
             } else if (sport.getSelectedItem() == null) {
                 Toast toast = new Toast(this.getContext());

@@ -88,4 +88,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test" />
 
+    <EditText
+        android:id="@+id/addParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginRight="125dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Participants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addSportGenders" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

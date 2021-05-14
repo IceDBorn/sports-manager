@@ -23,7 +23,7 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 
 public class AddSportFragment extends Fragment {
 
-    private EditText etName;
+    private EditText etName, participants;
     private Spinner typeSpinner, genderSpinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,6 +35,7 @@ public class AddSportFragment extends Fragment {
 
         typeSpinner = root.findViewById(R.id.addSportTypes);
         genderSpinner = root.findViewById(R.id.addSportGenders);
+        participants = root.findViewById(R.id.addParticipants);
 
         etName = root.findViewById(R.id.addSportName);
         Button btnAdd = root.findViewById(R.id.addSportSave);
@@ -50,11 +51,17 @@ public class AddSportFragment extends Fragment {
                 Toast toast = new Toast(this.getContext());
                 toast.setText("Name is empty");
                 toast.show();
-            } else {
+            } else if (participants.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Participants is empty");
+                toast.show();
+            }
+            else {
                 Sport sport = new Sport();
                 sport.setName(etName.getText().toString().trim());
                 sport.setType(typeSpinner.getSelectedItem().toString());
                 sport.setSex(genderSpinner.getSelectedItem().toString());
+                sport.setParticipants(Integer.parseInt(participants.getText().toString().trim()));
 
 
                 Connections c = Connections.getInstance(getContext());
