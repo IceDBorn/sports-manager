@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -86,23 +87,55 @@ public class AddAthleteFragment extends Fragment {
         });
 
         btnAdd.setOnClickListener(v -> {
-            Athlete athlete = new Athlete();
-            athlete.setName(etName.getText().toString().trim());
-            athlete.setSurname(etSurname.getText().toString().trim());
-            athlete.setCountry(etCountry.getText().toString().trim());
-            athlete.setCity(etCity.getText().toString().trim());
-            athlete.setSport_id(sportId);
-            athlete.setYear(date.getText().toString().trim());
+            if (etName.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Name is empty");
+                toast.show();
+            }
+            else if (etSurname.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Surname is empty");
+                toast.show();
+            }
+            else if (etCity.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("City is empty");
+                toast.show();
+            }
+            else if (etCountry.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Country is empty");
+                toast.show();
+            }
+            else if (spinner.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before adding an athlete");
+                toast.show();
+            }
+            else if (date.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Date is empty");
+                toast.show();
+            }
+            else {
+                Athlete athlete = new Athlete();
+                athlete.setName(etName.getText().toString().trim());
+                athlete.setSurname(etSurname.getText().toString().trim());
+                athlete.setCountry(etCountry.getText().toString().trim());
+                athlete.setCity(etCity.getText().toString().trim());
+                athlete.setSport_id(sportId);
+                athlete.setYear(date.getText().toString().trim());
 
 
-            Connections c1 = Connections.getInstance(getContext());
-            AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
-            athleteDAO.insert(athlete);
+                Connections c1 = Connections.getInstance(getContext());
+                AthleteDAO athleteDAO = c1.getDatabase().getAthleteDAO();
+                athleteDAO.insert(athlete);
 
-            AthletesFragment Athletes = new AthletesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
-            transaction.commit();
+                AthletesFragment Athletes = new AthletesFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, Athletes);
+                transaction.commit();
+            }
         });
 
         return root;

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,7 @@ public class EditAthleteFragment extends Fragment {
 
     private DatePickerDialog datePickerDialog;
     private TextView date;
-    private EditText etName,etSurname,etCity,etCountry;
+    private EditText etName, etSurname, etCity, etCountry;
     private Spinner spinner;
     private long sportId;
     public Athlete athlete;
@@ -64,8 +65,8 @@ public class EditAthleteFragment extends Fragment {
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        Connections c= Connections.getInstance(getContext());
-        SportDAO sportDAO=c.getDatabase().getSportDAO();
+        Connections c = Connections.getInstance(getContext());
+        SportDAO sportDAO = c.getDatabase().getSportDAO();
         List<Sport> sportList = sportDAO.getAllSports();
 
         // Δημιουργία νέου ArrayAdapter για το spinner
@@ -94,33 +95,58 @@ public class EditAthleteFragment extends Fragment {
 
             try {
                 Connections c1 = Connections.getInstance(getContext());
-                AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+                AthleteDAO athleteDAO = c1.getDatabase().getAthleteDAO();
                 Athlete athlete = athleteDAO.getAthleteById(id);
 
 
-                if (athlete==null){
+                if (athlete == null) {
                     System.out.println("Athlete does not exist");
-                }else{
+                } else {
+                    if (etName.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Name is empty");
+                        toast.show();
+                    } else if (etSurname.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Surname is empty");
+                        toast.show();
+                    } else if (etCity.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("City is empty");
+                        toast.show();
+                    } else if (etCountry.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Country is empty");
+                        toast.show();
+                    } else if (spinner.getSelectedItem() == null) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Add a sport before editing an athlete");
+                        toast.show();
+                    } else if (date.getText().toString().trim().equals("")) {
+                        Toast toast = new Toast(this.getContext());
+                        toast.setText("Date is empty");
+                        toast.show();
+                    } else {
 
-                    athlete.setName(etName.getText().toString().trim());
-                    athlete.setSurname(etSurname.getText().toString().trim());
-                    athlete.setCountry(etCountry.getText().toString().trim());
-                    athlete.setCity(etCity.getText().toString().trim());
-                    athlete.setSport_id(sportId);
-                    athlete.setYear(date.getText().toString().trim());
+                        athlete.setName(etName.getText().toString().trim());
+                        athlete.setSurname(etSurname.getText().toString().trim());
+                        athlete.setCountry(etCountry.getText().toString().trim());
+                        athlete.setCity(etCity.getText().toString().trim());
+                        athlete.setSport_id(sportId);
+                        athlete.setYear(date.getText().toString().trim());
 
-                    athleteDAO.update(athlete);
+                        athleteDAO.update(athlete);
+
+                        AthletesFragment Athletes = new AthletesFragment();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_host_fragment, Athletes);
+                        transaction.commit();
+                    }
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-
-
-            AthletesFragment Athletes = new AthletesFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
-            transaction.commit();
         });
 
         // TODO: Άλλαξε αυτή τη μέθοδο για να σβήνει τον αθλητή αντί να προσθέτει καινούριο
@@ -128,23 +154,23 @@ public class EditAthleteFragment extends Fragment {
 
             try {
                 Connections c1 = Connections.getInstance(getContext());
-                AthleteDAO athleteDAO= c1.getDatabase().getAthleteDAO();
+                AthleteDAO athleteDAO = c1.getDatabase().getAthleteDAO();
                 Athlete athlete = athleteDAO.getAthleteById(id);
 
-                if (athlete==null){
+                if (athlete == null) {
                     System.out.println("Athlete does not exist");
-                }else{
+                } else {
 
                     athleteDAO.delete(athlete);
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
             AthletesFragment Athletes = new AthletesFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Athletes);
+            transaction.replace(R.id.nav_host_fragment, Athletes);
             transaction.commit();
         });
 
