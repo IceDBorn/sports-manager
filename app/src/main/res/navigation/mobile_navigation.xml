@@ -28,10 +28,4 @@
         android:name="com.icedborn.sportsmanager.ui.teams.TeamsFragment"
         android:label="@string/menu_teams"
         tools:layout="@layout/fragment_recycleview" />
-
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.icedborn.sportsmanager.ui.settings.SettingsFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" />
 </navigation>
