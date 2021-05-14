@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,6 @@ import com.icedborn.sportsmanager.databases.Sport;
 import com.icedborn.sportsmanager.databases.SportDAO;
 import com.icedborn.sportsmanager.databases.Team;
 import com.icedborn.sportsmanager.databases.TeamDAO;
-import com.icedborn.sportsmanager.ui.sports.SportsFragment;
 
 import java.util.Calendar;
 import java.util.List;
@@ -85,22 +85,54 @@ public class AddTeamFragment extends Fragment {
         });
 
         btnAdd.setOnClickListener(v -> {
-            Team team = new Team();
-            team.setName(etName.getText().toString().trim());
-            team.setCountry(etCountry.getText().toString().trim());
-            team.setCity(etCity.getText().toString().trim());
-            team.setCourt_name(etStadium.getText().toString().trim());
-            team.setYear(date.getText().toString());
-            team.setSport_id(sportId);
+            if (etName.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Name is empty");
+                toast.show();
+            }
+            else if (etStadium.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Stadium is empty");
+                toast.show();
+            }
+            else if (etCity.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("City is empty");
+                toast.show();
+            }
+            else if (etCountry.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Country is empty");
+                toast.show();
+            }
+            else if (spinner.getSelectedItem() == null) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add a sport before adding a team");
+                toast.show();
+            }
+            else if (date.getText().toString().trim().equals("")) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Date is empty");
+                toast.show();
+            }
+            else {
+                Team team = new Team();
+                team.setName(etName.getText().toString().trim());
+                team.setCountry(etCountry.getText().toString().trim());
+                team.setCity(etCity.getText().toString().trim());
+                team.setCourt_name(etStadium.getText().toString().trim());
+                team.setYear(date.getText().toString());
+                team.setSport_id(sportId);
 
-            Connections c1 = Connections.getInstance(getContext());
-            TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
-            teamDAO.insert(team);
+                Connections c1 = Connections.getInstance(getContext());
+                TeamDAO teamDAO= c1.getDatabase().getTeamDAO();
+                teamDAO.insert(team);
 
-            TeamsFragment Teams = new TeamsFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment,Teams);
-            transaction.commit();
+                TeamsFragment Teams = new TeamsFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment,Teams);
+                transaction.commit();
+            }
         });
 
 
