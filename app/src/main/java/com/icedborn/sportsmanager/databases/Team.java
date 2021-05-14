@@ -31,6 +31,8 @@ public class Team {
 
     private long sport_id;
 
+    private String sport_name;
+
     @ColumnInfo(name = "founded")
     private String year;
 
@@ -117,6 +119,10 @@ public class Team {
     public void setYear(String year) {
         this.year = year;
     }
+
+    public void setSport_name(String name) {this.sport_name = name;}
+
+    public String getSport_name() {return this.sport_name;}
 
 
 

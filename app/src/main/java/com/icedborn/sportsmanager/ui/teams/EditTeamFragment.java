@@ -38,6 +38,7 @@ public class EditTeamFragment extends Fragment {
     private long sportId;
     public Team team;
     private Spinner spinner;
+    private String sportName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class EditTeamFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Sport sport = (Sport) parent.getSelectedItem();
                 sportId = sport.getId();
+                sportName = sport.getName();
             }
 
             @Override
@@ -137,6 +139,7 @@ public class EditTeamFragment extends Fragment {
                         team.setCourt_name(etStadium.getText().toString().trim());
                         team.setYear(date.getText().toString());
                         team.setSport_id(sportId);
+                        team.setSport_name(sportName);
 
                         teamDAO.update(team);
 
