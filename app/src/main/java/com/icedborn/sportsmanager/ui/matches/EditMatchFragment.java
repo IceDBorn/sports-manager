@@ -11,16 +11,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
@@ -31,7 +28,6 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 import com.icedborn.sportsmanager.databases.Team;
 import com.icedborn.sportsmanager.databases.TeamDAO;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -40,8 +36,7 @@ public class EditMatchFragment extends Fragment {
     private TextView date;
     private Spinner host, guest, sport;
     public Match match;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference matchRef = db.collection("Matches");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String teamCity,teamCountry;
 
 
@@ -68,17 +63,13 @@ public class EditMatchFragment extends Fragment {
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα, ομάδες
-        List<Sport> sportList = new ArrayList<>();
-        List<Team> teamList = new ArrayList<>();
-
         Connections c= Connections.getInstance(getContext());
 
         SportDAO sportDAO=c.getDatabase().getSportDAO();
-        sportList = sportDAO.getAllSports();
+        List<Sport> sportList = sportDAO.getAllSports();
 
         TeamDAO teamDAO=c.getDatabase().getTeamDAO();
-        teamList = teamDAO.getAllTeams();
+        List<Team> teamList = teamDAO.getAllTeams();
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
         ArrayAdapter<Team> hostAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teamList);
@@ -118,12 +109,23 @@ public class EditMatchFragment extends Fragment {
             updateRef.update("team1",host.getSelectedItem().toString());
             updateRef.update("team2",guest.getSelectedItem().toString());
 
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
         btnRemove.setOnClickListener(v -> {
 
             DocumentReference deleteRef = db.document("Matches/" + match.getId());
             deleteRef.delete();
+
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
 

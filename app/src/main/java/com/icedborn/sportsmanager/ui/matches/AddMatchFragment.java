@@ -117,6 +117,12 @@ public class AddMatchFragment extends Fragment {
 
             matchRef.add(match);
 
+            MatchesFragment Matches = new MatchesFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, Matches);
+            transaction.commit();
+            ((HideShowIconInterface) requireActivity()).showBurger();
+
         });
 
         ImageButton imageButton = root.findViewById(R.id.addMatchBackButton);

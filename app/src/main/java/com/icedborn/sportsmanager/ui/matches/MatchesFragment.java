@@ -65,7 +65,10 @@ public class MatchesFragment extends Fragment implements MatchAdapter.OnMatchLis
             }
 
             SetAdapter();
-            textView.setText("");
+            if (matchesList.size() > 0) {
+                textView.setText("");
+            }
+
         });
 
         return root;
