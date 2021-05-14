@@ -178,7 +178,7 @@ public class EditAthleteFragment extends Fragment {
             ((HideShowIconInterface) requireActivity()).showBurger();
         });
 
-        ImageButton imageButton = root.findViewById(R.id.addAthleteBackButton);
+        ImageButton imageButton = root.findViewById(R.id.editAthleteBackButton);
 
         imageButton.setOnClickListener(v -> {
             AthletesFragment Athletes = new AthletesFragment();
