@@ -129,14 +129,6 @@ public class Team {
     //A simple toString in case we need it somewhere
     @Override
     public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", court_name='" + court_name + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                ", sport_id=" + sport_id +
-                ", year='" + year + '\'' +
-                '}';
+        return name;
     }
 }

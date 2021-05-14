@@ -17,19 +17,31 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
+import com.icedborn.sportsmanager.databases.Connections;
+import com.icedborn.sportsmanager.databases.Match;
+import com.icedborn.sportsmanager.databases.Sport;
+import com.icedborn.sportsmanager.databases.SportDAO;
+import com.icedborn.sportsmanager.databases.Team;
+import com.icedborn.sportsmanager.databases.TeamDAO;
 import com.icedborn.sportsmanager.ui.athletes.AthletesFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddMatchFragment extends Fragment {
 
     private DatePickerDialog datePickerDialog;
     private TextView date;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Spinner hostSpinner,guestSpinner,sportSpinner;
+    private CollectionReference matchRef = db.collection("Matches");
+    private String teamCity,teamCountry;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,7 +53,6 @@ public class AddMatchFragment extends Fragment {
 
         Button btnAdd = root.findViewById(R.id.addMatchSave);
 
-        db = FirebaseFirestore.getInstance();
 
         // Δημιουργία της επιλογής ημερομηνίας
         InitializeDatePicker();
@@ -53,50 +64,59 @@ public class AddMatchFragment extends Fragment {
         // Δείξε την επιλογή ημερομηνίας όταν πατάς click στην ημερομηνία
         date.setOnClickListener(v -> datePickerDialog.show());
 
-        Spinner hostSpinner = root.findViewById(R.id.addMatchHost);
+        hostSpinner = root.findViewById(R.id.addMatchHost);
 
-        Spinner guestSpinner = root.findViewById(R.id.addMatchGuest);
+        guestSpinner = root.findViewById(R.id.addMatchGuest);
 
-        Spinner sportSpinner = root.findViewById(R.id.addMatchSport);
+        sportSpinner = root.findViewById(R.id.addMatchSport);
 
         // TODO: Δημιούργησε μέθοδο για να γεμίζει ο πίνακας με τα αθλήματα, ομάδες
-        String[] sports = {"Sport One", "Sport Two", "Sport Three"};
-        String[] teams = {"Team One", "Team Two", "Team Three"};
+        List<Sport> sportList = new ArrayList<>();
+        List<Team> teamList = new ArrayList<>();
+
+        Connections c= Connections.getInstance(getContext());
+
+        SportDAO sportDAO=c.getDatabase().getSportDAO();
+        sportList = sportDAO.getAllSports();
+
+        TeamDAO teamDAO=c.getDatabase().getTeamDAO();
+        teamList = teamDAO.getAllTeams();
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
-        ArrayAdapter<String> hostAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teams);
+        ArrayAdapter<Team> hostAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teamList);
         hostAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<String> guestAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teams);
+        ArrayAdapter<Team> guestAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teamList);
         guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<String> sportAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sports);
+        ArrayAdapter<Sport> sportAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sportList);
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         hostSpinner.setAdapter(hostAdapter);
         guestSpinner.setAdapter(guestAdapter);
         sportSpinner.setAdapter(sportAdapter);
 
-        btnAdd.setOnClickListener(v -> {
-            if (hostSpinner.getCount() < 2) {
-                Toast toast = new Toast(this.getContext());
-                toast.setText("Add two teams before adding a match");
-                toast.show();
-            } else if (guestSpinner.getSelectedItem() == hostSpinner.getSelectedItem()) {
-                Toast toast = new Toast(this.getContext());
-                toast.setText("Team " + hostSpinner.getSelectedItem().toString() + " can't be host and guest at the same match");
-                toast.show();
-            } else if (sportSpinner.getSelectedItem() == null) {
-                Toast toast = new Toast(this.getContext());
-                toast.setText("Add a sport before adding a match");
-                toast.show();
-            } else {
-                MatchesFragment Matches = new MatchesFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, Matches);
-                transaction.commit();
-                ((HideShowIconInterface) requireActivity()).showBurger();
+        for (int i=0; i<teamList.size(); i++){
+
+            if (teamList.get(i).getName().equals(hostSpinner.getSelectedItem().toString())){
+                teamCity = teamList.get(i).getCity();
+                teamCountry = teamList.get(i).getCountry();
+                break;
             }
+        }
+
+
+        btnAdd.setOnClickListener(v -> {
+
+            Match match = new Match();
+            match.setTeam2(guestSpinner.getSelectedItem().toString());
+            match.setTeam1(guestSpinner.getSelectedItem().toString());
+            match.setSport(sportSpinner.getSelectedItem().toString());
+            match.setDate(date.getText().toString());
+            match.setCountry(teamCountry);
+            match.setCityName(teamCity);
+
+            matchRef.add(match);
+
         });
 
         ImageButton imageButton = root.findViewById(R.id.addMatchBackButton);
