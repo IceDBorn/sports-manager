@@ -3,12 +3,12 @@ package com.icedborn.sportsmanager.databases;
 public class Match {
 
     private String id;
-    private Team team1;
+    private String team1;
     private String team2;
     private String cityName;
     private String country;
     private String date;
-    private Sport sport;
+    private String sport;
 
     public Match() {
     }
@@ -22,27 +22,27 @@ public class Match {
     }
 
     public String getCityName() {
-        return team1.getCity();
+        return cityName;
     }
 
     public void setCityName(String cityName) {
-        this.team1.setCity(cityName);
+        this.cityName = cityName;
     }
 
     public String getCountry() {
 
-        return team1.getCountry();
+        return country;
     }
 
     public void setCountry(String country) {
-        this.team1.setCountry(country);
+        this.country = country;
     }
 
     public String getDate() {
         return date;
     }
 
-    public Match(Team team1, String team2, String cityName, String country, String date, Sport sport) {
+    public Match(String team1, String team2, String cityName, String country, String date, String sport) {
         this.team1 = team1;
         this.team2 = team2;
         this.cityName = cityName;
@@ -55,19 +55,19 @@ public class Match {
         this.date = date;
     }
 
-    public Sport getSport() {
+    public String getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
+    public void setSport(String sport) {
         this.sport = sport;
     }
 
-    public Team getTeam1() {
+    public String getTeam1() {
         return team1;
     }
 
-    public void setTeam1(Team team1) {
+    public void setTeam1(String team1) {
         this.team1 = team1;
     }
 
