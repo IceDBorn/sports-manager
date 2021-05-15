@@ -60,7 +60,12 @@ public class Athlete {
         this.year = year;
     }
 
+    public Athlete(String name) {
+        this.name = name;
+    }
+
     public Athlete() {
+
     }
 
 
@@ -131,14 +136,6 @@ public class Athlete {
     //A simple toString in case we need it somewhere
     @Override
     public String toString() {
-        return "Athlete{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                ", sport_name=" + sport_name +
-                ", year='" + year + '\'' +
-                '}';
+        return name;
     }
 }

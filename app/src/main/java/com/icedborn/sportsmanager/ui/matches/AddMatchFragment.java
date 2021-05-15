@@ -17,11 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.icedborn.sportsmanager.HideShowIconInterface;
 import com.icedborn.sportsmanager.R;
 import com.icedborn.sportsmanager.controllers.DateController;
+import com.icedborn.sportsmanager.databases.Athlete;
+import com.icedborn.sportsmanager.databases.AthleteDAO;
 import com.icedborn.sportsmanager.databases.Connections;
 import com.icedborn.sportsmanager.databases.Match;
 import com.icedborn.sportsmanager.databases.Sport;
@@ -29,6 +32,7 @@ import com.icedborn.sportsmanager.databases.SportDAO;
 import com.icedborn.sportsmanager.databases.Team;
 import com.icedborn.sportsmanager.databases.TeamDAO;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,6 +45,9 @@ public class AddMatchFragment extends Fragment {
     private final CollectionReference matchRef = db.collection("Matches");
     private List<Sport> sportsList;
     private List<Team> teamsList;
+    private List<Athlete> addAthletesList;
+    private final ArrayList<String> removeAthletesList = new ArrayList<>();
+    private ArrayAdapter<Athlete> addParticipantAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -64,31 +71,69 @@ public class AddMatchFragment extends Fragment {
         date.setOnClickListener(v -> datePickerDialog.show());
 
         hostSpinner = root.findViewById(R.id.addMatchHost);
-
         guestSpinner = root.findViewById(R.id.addMatchGuest);
-
         sportSpinner = root.findViewById(R.id.addMatchSport);
+        Spinner addParticipantSpinner = root.findViewById(R.id.addMatchAdd);
+        Spinner removeParticipantSpinner = root.findViewById(R.id.addMatchRemove);
+        FloatingActionButton addParticipant = root.findViewById(R.id.addMatchAddParticipant);
+        FloatingActionButton removeParticipant = root.findViewById(R.id.addMatchRemoveParticipant);
 
         Connections c = Connections.getInstance(getContext());
-
         SportDAO sportDAO = c.getDatabase().getSportDAO();
         sportsList = sportDAO.getAllSports();
-
         TeamDAO teamDAO = c.getDatabase().getTeamDAO();
         teamsList = teamDAO.getAllTeams();
+        AthleteDAO athleteDAO = c.getDatabase().getAthleteDAO();
+        addAthletesList = athleteDAO.getAllAthletes();
 
         // Δημιουργία νέων ArrayAdapter για τα spinner
         ArrayAdapter<Team> hostAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teamsList);
         hostAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         ArrayAdapter<Team> guestAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, teamsList);
         guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         ArrayAdapter<Sport> sportAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sportsList);
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, addAthletesList);
+        addParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         hostSpinner.setAdapter(hostAdapter);
         guestSpinner.setAdapter(guestAdapter);
         sportSpinner.setAdapter(sportAdapter);
+        addParticipantSpinner.setAdapter(addParticipantAdapter);
+
+        addParticipant.setOnClickListener(v -> {
+            if (addParticipantSpinner.getSelectedItem() != null) {
+                removeAthletesList.add(addParticipantSpinner.getSelectedItem().toString());
+                addAthletesList.remove(addParticipantSpinner.getSelectedItemPosition());
+                addParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, addAthletesList);
+                addParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                addParticipantSpinner.setAdapter(addParticipantAdapter);
+                ArrayAdapter<String> removeParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, removeAthletesList);
+                removeParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                removeParticipantSpinner.setAdapter(removeParticipantAdapter);
+            } else {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("No more athletes to add");
+                toast.show();
+            }
+        });
+
+        removeParticipant.setOnClickListener(v -> {
+            if (removeParticipantSpinner.getSelectedItem() != null) {
+                addAthletesList.add(new Athlete(removeParticipantSpinner.getSelectedItem().toString()));
+                removeAthletesList.remove(removeParticipantSpinner.getSelectedItemPosition());
+                addParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, addAthletesList);
+                addParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                addParticipantSpinner.setAdapter(addParticipantAdapter);
+                ArrayAdapter<String> removeParticipantAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, removeAthletesList);
+                removeParticipantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                removeParticipantSpinner.setAdapter(removeParticipantAdapter);
+            } else {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("No more athletes to remove");
+                toast.show();
+            }
+        });
 
         btnAdd.setOnClickListener(v -> {
             if (hostSpinner.getCount() < 2) {
@@ -106,6 +151,14 @@ public class AddMatchFragment extends Fragment {
             } else if (date.getText().equals("")) {
                 Toast toast = new Toast(this.getContext());
                 toast.setText("Date is empty");
+                toast.show();
+            } else if (removeParticipantSpinner.getCount() < sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Add " + (sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) + " athletes");
+                toast.show();
+            } else if (removeParticipantSpinner.getCount() > sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Remove " + ((sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) / -1) + " athletes");
                 toast.show();
             } else {
                 String sportId = 0 + "";
