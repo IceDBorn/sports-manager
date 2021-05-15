@@ -154,7 +154,11 @@ public class AddMatchFragment extends Fragment {
                 toast.show();
             } else if (removeParticipantSpinner.getCount() < sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants()) {
                 Toast toast = new Toast(this.getContext());
-                toast.setText("Add " + (sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) + " more athletes");
+                toast.setText("Add " + (sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) + " athletes");
+                toast.show();
+            } else if (removeParticipantSpinner.getCount() > sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants()) {
+                Toast toast = new Toast(this.getContext());
+                toast.setText("Remove " + ((sportsList.get(sportSpinner.getSelectedItemPosition()).getParticipants() - removeParticipantSpinner.getCount()) / -1) + " athletes");
                 toast.show();
             } else {
                 String sportId = 0 + "";
